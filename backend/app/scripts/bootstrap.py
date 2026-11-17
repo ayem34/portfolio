@@ -1,4 +1,4 @@
-"""Préparation de la base au démarrage : compte admin, métiers, profil.
+"""Préparation de la base au démarrage : compte admin, métiers, profil, contenu d'exemple.
 
 Peut être relancé sans risque : rien n'est créé en double.
 Usage : python -m app.scripts.bootstrap
@@ -12,7 +12,9 @@ from sqlalchemy.orm import Session
 from app.config import Settings, get_settings
 from app.database import SessionLocal
 from app.models import Admin, Metier, Profil
+from app.scripts.example_content import seed_example_content
 from app.security import hash_password
+from app.services.storage import build_storage
 
 logger = logging.getLogger("bootstrap")
 
@@ -52,10 +54,16 @@ def ensure_profil(db: Session) -> None:
 
 
 def bootstrap(db: Session, settings: Settings) -> None:
-    if ensure_admin(db, settings):
+    first_start = ensure_admin(db, settings)
+    if first_start:
         logger.info("Compte admin créé pour %s", settings.admin_email)
     ensure_metiers(db)
     ensure_profil(db)
+    db.flush()
+    # Le contenu d'exemple n'est proposé qu'au tout premier démarrage : supprimé
+    # ensuite par Ayem, il ne revient pas.
+    if first_start and settings.seed_example_content:
+        seed_example_content(db, build_storage(settings))
     db.commit()
 
 
