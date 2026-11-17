@@ -15,6 +15,14 @@ export default defineConfig({
     proxy: {
       '/api': apiTarget,
       '/uploads': apiTarget,
+      // Le site lit son contenu dans /data/*.json (fichiers générés à la publication).
+      // En développement, ces adresses sont servies en direct par l'API.
+      '/data/site.json': { target: apiTarget, rewrite: () => '/api/public/site' },
+      '^/data/projets/[^/]+\\.json$': {
+        target: apiTarget,
+        rewrite: (path) =>
+          path.replace(/^\/data\/projets\/([^/]+)\.json$/, '/api/public/projets/$1'),
+      },
     },
   },
   test: {
