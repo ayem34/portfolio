@@ -17,6 +17,10 @@ class Settings(BaseSettings):
     jwt_expire_minutes: int = 60
     cookie_secure: bool = False
     frontend_origins: str = "http://localhost:5173,http://localhost:8080"
+    # Nombre de serveurs relais de confiance devant l'API (0 en local, 1 sur Render) :
+    # sert à retrouver l'adresse du visiteur pour la limitation de requêtes.
+    trusted_proxy_count: int = 0
+    rate_limit_enabled: bool = True
 
     # Compte administrateur créé au premier démarrage
     admin_email: str = ""
@@ -43,6 +47,10 @@ class Settings(BaseSettings):
 
     # Contenu d'exemple fictif créé au premier démarrage
     seed_example_content: bool = True
+
+    @property
+    def notification_recipient(self) -> str:
+        return self.notification_email or self.admin_email
 
     @property
     def cors_origins(self) -> list[str]:
