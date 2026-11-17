@@ -29,5 +29,12 @@ export function formatDate(
   options: Intl.DateTimeFormatOptions = { dateStyle: 'medium' },
 ): string {
   if (!value) return '';
-  return new Intl.DateTimeFormat(language, options).format(new Date(value));
+  // Une date sans heure (« 2024-09-01 ») est un jour civil : on l'affiche tel quel,
+  // sans décalage de fuseau (sinon elle pourrait reculer d'un jour selon le visiteur).
+  const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(value);
+  const format = new Intl.DateTimeFormat(
+    language,
+    dateOnly ? { ...options, timeZone: 'UTC' } : options,
+  );
+  return format.format(new Date(value));
 }

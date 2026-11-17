@@ -44,6 +44,8 @@ export function useProject(slug: string) {
 export interface InitialContent {
   site: PublicSite;
   projet?: PublicProjetDetail;
+  /** Page 404 générique : elle est servie pour n'importe quelle adresse inconnue. */
+  notFound?: boolean;
 }
 
 export function seedContent(queryClient: QueryClient, content: InitialContent): void {

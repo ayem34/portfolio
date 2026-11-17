@@ -1,0 +1,23 @@
+{
+  "site": {
+    "profil": {
+      "nom": "",
+      "titre": { "fr": "", "en": "" },
+      "presentation": {
+        "accroche": { "fr": "", "en": "" },
+        "profil": { "fr": "", "en": "" },
+        "orientation": { "fr": "", "en": "" },
+        "methode": { "fr": "", "en": "" }
+      },
+      "email": "",
+      "liens": { "linkedin": "", "github": "" },
+      "cv_url": null
+    },
+    "metiers": [],
+    "projets": [],
+    "technologies": [],
+    "parcours": [],
+    "genere_le": "2026-01-01T00:00:00Z"
+  },
+  "projets": []
+}

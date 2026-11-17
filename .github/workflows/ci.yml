@@ -62,5 +62,9 @@ jobs:
         run: npm run typecheck
       - name: Vitest
         run: npm test
-      - name: Build
+      - name: Génération statique (contenu d'essai, sans API)
         run: npm run build
+        env:
+          CONTENT_FIXTURE: scripts/fixtures/content.json
+      - name: Vérifier les fichiers générés
+        run: test -f dist/index.html && test -f dist/projets/index.html && test -f dist/admin/index.html && test -f dist/404.html && test -f dist/sitemap.xml && test -f dist/robots.txt && test -f dist/data/site.json
