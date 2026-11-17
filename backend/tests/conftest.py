@@ -1,6 +1,7 @@
 """Configuration des tests : base PostgreSQL dédiée, créée par les migrations Alembic."""
 
 import os
+import tempfile
 
 TEST_DATABASE_URL = os.environ.get(
     "TEST_DATABASE_URL", "postgresql+psycopg://portfolio:portfolio@localhost:5432/portfolio_test"
@@ -16,6 +17,8 @@ os.environ.update(
     STORAGE_BACKEND="local",
     DEPLOY_HOOK_URL="",
     SEED_EXAMPLE_CONTENT="false",
+    UPLOADS_DIR=tempfile.mkdtemp(prefix="portfolio-test-uploads-"),
+    SITE_URL="https://portfolio.test",
 )
 
 import pytest  # noqa: E402
@@ -28,7 +31,11 @@ from alembic import command  # noqa: E402
 from app.config import get_settings  # noqa: E402
 from app.database import Base, SessionLocal, engine  # noqa: E402
 from app.main import app  # noqa: E402
+from app.rate_limit import limiter  # noqa: E402
 from app.scripts.bootstrap import bootstrap  # noqa: E402
+from app.services.mailer import console_mailer  # noqa: E402
+
+ADMIN_CREDENTIALS = {"email": "admin@example.com", "mot_de_passe": "mot-de-passe-de-test"}
 
 
 def alembic_config(database_url: str = TEST_DATABASE_URL) -> Config:
@@ -67,6 +74,8 @@ def clean_tables(database):
         connection.execute(text(f"TRUNCATE {tables} RESTART IDENTITY CASCADE"))
     with SessionLocal() as session:
         bootstrap(session, get_settings())
+    limiter.reset()
+    console_mailer.outbox.clear()
 
 
 @pytest.fixture
@@ -79,3 +88,16 @@ def db():
 def client():
     with TestClient(app) as test_client:
         yield test_client
+
+
+@pytest.fixture
+def admin(client):
+    """Client connecté en tant qu'admin (le cookie de session est conservé)."""
+    response = client.post("/api/auth/connexion", json=ADMIN_CREDENTIALS)
+    assert response.status_code == 200
+    return client
+
+
+@pytest.fixture
+def outbox():
+    return console_mailer.outbox
