@@ -1,0 +1,71 @@
+# Lancement local complet : docker compose up
+# Aucun compte externe n'est nécessaire. Les valeurs par défaut conviennent pour un
+# premier essai ; pour les changer, copier .env.example en .env.
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: portfolio
+      POSTGRES_PASSWORD: portfolio
+      POSTGRES_DB: portfolio
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U portfolio -d portfolio"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "8025:8025" # boîte de réception de test
+      - "1025:1025" # SMTP
+
+  api:
+    build: ./backend
+    command: ["--reload"]
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgresql+psycopg://portfolio:portfolio@db:5432/portfolio
+      TEST_DATABASE_URL: postgresql+psycopg://portfolio:portfolio@db:5432/portfolio_test
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-changez-moi}
+      SECRET_KEY: ${SECRET_KEY:-cle-locale-a-changer-en-production}
+      STORAGE_BACKEND: ${STORAGE_BACKEND:-local}
+      EMAIL_BACKEND: ${EMAIL_BACKEND:-smtp}
+      SMTP_HOST: ${SMTP_HOST:-mailpit}
+      SMTP_PORT: ${SMTP_PORT:-1025}
+    volumes:
+      - ./backend:/app
+      - ./uploads:/app/uploads
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  frontend:
+    build: ./frontend
+    environment:
+      API_PROXY_TARGET: http://api:8000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api
+
+volumes:
+  db-data:
