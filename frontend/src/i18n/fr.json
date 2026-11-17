@@ -1,6 +1,455 @@
 {
   "common": {
     "loading": "Chargement…",
-    "siteUnderConstruction": "Site en cours de construction"
+    "siteUnderConstruction": "Site en cours de construction",
+    "close": "Fermer",
+    "menu": "Menu",
+    "skipToContent": "Aller au contenu"
+  },
+  "language": {
+    "label": "Langue",
+    "fr": "Français",
+    "en": "Anglais"
+  },
+  "badges": {
+    "label": "Badges du projet",
+    "code": "Code",
+    "etat": "État",
+    "demo": "Démo",
+    "demoLevel": {
+      "aucune": "À venir",
+      "lien_externe": "Lien externe",
+      "captures": "Captures",
+      "video": "Vidéo",
+      "visite": "Visite guidée",
+      "notebook": "Notebook",
+      "playground": "Playground",
+      "bac_a_sable": "Bac à sable"
+    }
+  },
+  "enums": {
+    "categorie": {
+      "personnel": "Projet personnel",
+      "academique": "Projet académique",
+      "collaboratif": "Projet collaboratif"
+    },
+    "etat": {
+      "termine": "Terminé",
+      "en_cours": "En cours",
+      "prototype": "Prototype"
+    },
+    "acces_code": {
+      "public": "Public",
+      "prive": "Privé",
+      "confidentiel": "Confidentiel (client)"
+    },
+    "statut_publication": {
+      "brouillon": "Brouillon",
+      "publie": "Publié",
+      "archive": "Archivé"
+    },
+    "niveau": {
+      "notions": "Notions",
+      "pratique": "Pratique",
+      "bonne_maitrise": "Bonne maîtrise"
+    },
+    "type_demo": {
+      "video": "Vidéo",
+      "visite": "Visite guidée",
+      "notebook": "Notebook",
+      "playground": "Playground",
+      "bac_a_sable": "Bac à sable",
+      "lien_externe": "Lien externe",
+      "captures": "Captures"
+    },
+    "type_media": {
+      "image": "Image",
+      "video": "Vidéo",
+      "pdf": "PDF",
+      "notebook": "Notebook HTML",
+      "sous_titres": "Sous-titres"
+    },
+    "type_parcours": {
+      "formation": "Formation",
+      "stage": "Stage",
+      "certification": "Certification",
+      "hackathon": "Hackathon",
+      "challenge": "Challenge"
+    },
+    "statut_demande": {
+      "en_attente": "En attente",
+      "acceptee": "Acceptée",
+      "refusee": "Refusée",
+      "revoquee": "Révoquée"
+    },
+    "cadre": {
+      "navigateur": "Navigateur",
+      "telephone": "Téléphone",
+      "aucun": "Aucun cadre"
+    }
+  },
+  "errors": {
+    "erreur_inconnue": "Une erreur est survenue. Réessayez dans un instant.",
+    "chargement": "Le chargement a échoué. Rechargez la page.",
+    "serveur_injoignable": "Le serveur ne répond pas encore (il peut être en veille). Réessayez dans une minute.",
+    "donnees_invalides": "Certaines valeurs sont invalides. Vérifiez les champs (adresses en https://, dates, textes obligatoires).",
+    "introuvable": "Élément introuvable.",
+    "identifiants_invalides": "E-mail ou mot de passe incorrect.",
+    "trop_de_requetes": "Trop de tentatives. Patientez une minute avant de réessayer.",
+    "slug_deja_utilise": "Cette adresse (slug) est déjà utilisée par un autre projet.",
+    "reference_inconnue": "Un métier ou une compétence sélectionné n'existe plus. Rechargez la page.",
+    "nom_deja_utilise": "Une compétence porte déjà ce nom.",
+    "ordre_incomplet": "La liste a changé entre-temps. Rechargez la page avant de réordonner.",
+    "visite_avec_etapes": "Cette visite a déjà des étapes : son type ne peut plus changer.",
+    "demo_sans_etapes": "Seule une visite guidée peut avoir des étapes.",
+    "type_de_fichier_refuse": "Type de fichier refusé. Acceptés : PNG, JPEG, WebP, GIF, MP4, WebM, PDF, HTML, VTT.",
+    "fichier_trop_volumineux": "Fichier trop volumineux (images 5 Mo, PDF 10 Mo, notebooks 15 Mo, vidéos 50 Mo).",
+    "contenu_de_fichier_invalide": "Le contenu du fichier ne correspond pas à son extension.",
+    "media_utilise": "Ce fichier est encore utilisé (visite guidée, démo, CV ou justificatif). Retirez-le d'abord de là.",
+    "demande_deja_traitee": "Cette demande a déjà été traitée.",
+    "demande_non_acceptee": "Seule une demande acceptée peut être révoquée.",
+    "deploy_hook_non_configure": "La publication n'est pas configurée (variable DEPLOY_HOOK_URL absente).",
+    "deploy_hook_en_echec": "Le service de publication n'a pas répondu. Réessayez dans un instant.",
+    "code_invalide": "Ce code est invalide ou a expiré.",
+    "projet_non_confidentiel": "Ce projet est déjà consultable librement."
+  },
+  "tour": {
+    "empty": "Cette visite guidée n'a pas encore d'écran.",
+    "label": "Visite guidée interactive",
+    "roleDescription": "visite guidée",
+    "step": "Étape {{current}} sur {{total}}",
+    "hotspot": "Zone à cliquer : passer à l'écran suivant",
+    "progress": "Progression de la visite",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "restart": "Recommencer"
+  },
+  "demo": {
+    "tabs": "Démonstrations disponibles",
+    "unavailable": "Cette démonstration n'est pas encore disponible.",
+    "openInNewTab": "Ouvrir dans un nouvel onglet",
+    "openExternal": "Ouvrir la démonstration",
+    "downloadVideo": "Télécharger la vidéo",
+    "notebookError": "Le notebook n'a pas pu être affiché ici.",
+    "playgroundUnavailable": "Le playground n'est pas disponible pour le moment.",
+    "playgroundHint": "Le playground est hébergé gratuitement : son premier chargement peut prendre une trentaine de secondes.",
+    "sandboxNotice": "Mode démo — données fictives. Aucun compte à créer : choisissez un rôle, la connexion est automatique.",
+    "sandboxWaking": "Démarrage de la démo (environ 30 s)…",
+    "sandboxUnreachable": "Le serveur de démo ne répond pas pour le moment. Vous pouvez tout de même essayer d'ouvrir la démo.",
+    "sandboxTourMeanwhile": "Voir la visite guidée en attendant",
+    "exploreAs": "Explorer en tant que {{role}}"
+  },
+  "project": {
+    "metiers": "Métiers concernés",
+    "openDemo": "Voir la démo : {{demo}}",
+    "demo": "Démonstration",
+    "context": "Contexte et problématique",
+    "goalsAndResults": "Objectifs et résultats",
+    "goals": "Objectifs",
+    "results": "Résultats",
+    "howIWork": "Comment je travaille",
+    "method": {
+      "regles_metier": "Règles métier",
+      "architecture": "Schéma d'architecture",
+      "modele_donnees": "Modèle de données",
+      "parcours_utilisateur": "Parcours utilisateur",
+      "decisions": "Décisions prises et leur raison"
+    },
+    "technologies": "Technologies",
+    "gallery": "Galerie",
+    "enlarge": "Agrandir : {{caption}}",
+    "challengesAndLearnings": "Difficultés et apprentissages",
+    "challenges": "Difficultés",
+    "learnings": "Apprentissages",
+    "links": "Liens",
+    "link": {
+      "github": "Code sur GitHub",
+      "demo": "Démo en ligne",
+      "documentation": "Documentation",
+      "rapport": "Rapport"
+    }
+  },
+  "timeline": {
+    "ongoing": "aujourd'hui",
+    "proof": "Justificatif"
+  },
+  "admin": {
+    "title": "Administration",
+    "navLabel": "Menu de l'administration",
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "projects": "Projets",
+      "skills": "Compétences",
+      "timeline": "Parcours",
+      "profile": "Profil",
+      "media": "Médias",
+      "messages": "Messages",
+      "accessRequests": "Demandes d'accès",
+      "publication": "Publication"
+    },
+    "lastLogin": "Dernière connexion : {{date}}",
+    "viewSite": "Voir le site",
+    "logout": "Se déconnecter",
+    "wakingApi": "Connexion au serveur… (il peut mettre une minute à se réveiller)",
+    "save": "Enregistrer",
+    "saved": "Enregistré.",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "deleted": "Supprimé.",
+    "reordered": "Ordre mis à jour.",
+    "preview": "Prévisualiser",
+    "required": "Ce champ est obligatoire.",
+    "confirmDelete": "Supprimer définitivement cet élément ?",
+    "unsavedChanges": "Modifications non enregistrées.",
+    "moveUp": "Monter {{item}}",
+    "moveDown": "Descendre {{item}}",
+    "markdownHint": "Les textes longs acceptent le Markdown : **gras**, listes avec « - », titres avec « ## », liens [texte](https://…), images ![légende](adresse copiée depuis Médias).",
+    "login": {
+      "title": "Connexion",
+      "email": "E-mail",
+      "emailInvalid": "Saisissez une adresse e-mail valide.",
+      "password": "Mot de passe",
+      "submit": "Se connecter"
+    },
+    "dashboard": {
+      "period": "Période",
+      "lastDays": "{{count}} derniers jours",
+      "views": "Vues de fiches",
+      "demoLaunches": "Démos lancées",
+      "unreadMessages": "Messages à traiter",
+      "pendingRequests": "Demandes d'accès en attente",
+      "viewsPerProject": "Vues par projet",
+      "demosByType": "Démos lancées par type",
+      "chosenMetiers": "Métier choisi par les visiteurs",
+      "latestMessages": "Derniers messages",
+      "latestRequests": "Dernières demandes d'accès",
+      "noData": "Aucune donnée sur cette période."
+    },
+    "project": {
+      "singular": "Projet",
+      "listDescription": "L'ordre de cette liste est l'ordre d'affichage sur le site. Un brouillon n'est jamais visible par les visiteurs.",
+      "create": "Nouveau projet",
+      "empty": "Aucun projet pour l'instant.",
+      "featured": "Projet phare",
+      "feature": "Marquer « phare »",
+      "unfeature": "Retirer « phare »",
+      "publish": "Publier",
+      "unpublish": "Repasser en brouillon",
+      "archive": "Archiver",
+      "statusChanged": "Statut mis à jour.",
+      "publishReminder": "Pensez à « Mettre le site à jour » (menu Publication) pour que les visiteurs voient les changements.",
+      "backToList": "Tous les projets",
+      "backToEditor": "Retour à l'éditeur",
+      "previewBanner": "Aperçu : voici la fiche telle que les visiteurs la verront.",
+      "saveFirst": "Enregistrez d'abord le projet pour ajouter sa galerie et ses démos.",
+      "tabs": {
+        "general": "Général",
+        "contenu": "Contenu de la fiche",
+        "galerie": "Galerie",
+        "demos": "Démos",
+        "historique": "Historique"
+      },
+      "identity": "Identité du projet",
+      "title": "Titre",
+      "titleRequired": "Le titre en français est obligatoire.",
+      "slug": "Adresse de la fiche (slug)",
+      "slugHint": "La fiche sera visible sur /projets/cette-adresse. Minuscules, chiffres et tirets uniquement.",
+      "slugInvalid": "Utilisez uniquement des minuscules, des chiffres et des tirets (ex. telcom-ci).",
+      "summary": "Résumé d'une phrase",
+      "classification": "Catégorie et badges",
+      "category": "Catégorie",
+      "codeHint": "« Confidentiel » : la fiche ne montre que son en-tête ; le reste demande un code d'accès.",
+      "featuredLabel": "Projet phare (affiché sur l'accueil)",
+      "metiers": "Métiers concernés",
+      "metiersHint": "Le projet remonte en tête quand le visiteur choisit l'un de ces métiers, d'autant plus haut que la pertinence est forte.",
+      "relevanceFor": "Pertinence pour {{metier}}",
+      "relevance": {
+        "3": "Pertinence forte",
+        "2": "Pertinence moyenne",
+        "1": "Pertinence faible"
+      },
+      "noTechnologies": "Aucune compétence n'existe encore. Ajoutez-en dans",
+      "figures": "Résultats chiffrés",
+      "figuresHint": "Exemples : « 0,87 » + « Score F1 », « 2,4 M » + « lignes traitées ».",
+      "figureValue": "Valeur",
+      "figureLabel": "Libellé",
+      "addFigure": "Ajouter un chiffre"
+    },
+    "gallery": {
+      "add": "Ajouter des images à la galerie",
+      "hint": "PNG, JPEG, WebP ou GIF, 5 Mo au maximum par image.",
+      "empty": "La galerie est vide.",
+      "caption": "Légende",
+      "saveCaption": "Enregistrer la légende",
+      "remove": "Retirer de la galerie",
+      "removed": "Image retirée de la galerie (elle reste dans Médias)."
+    },
+    "demo": {
+      "addLabel": "Type de démo à ajouter",
+      "add": "Ajouter la démo",
+      "created": "Démo ajoutée. Complétez-la ci-dessous.",
+      "empty": "Ce projet n'a pas encore de démo.",
+      "url": "Adresse",
+      "title": "Titre de l'onglet (facultatif)",
+      "titleHint": "Vide : le nom du type de démo est affiché.",
+      "main": "Démo principale (bouton en haut de la fiche)",
+      "subtitles": "Sous-titres — {{language}} (fichier .vtt)",
+      "loginUrl": "Adresse de connexion de démo",
+      "loginUrlHint": "Le portfolio y ajoute « ?role=clé-du-rôle ». Cette route appartient au projet présenté.",
+      "roles": "Rôles proposés",
+      "roleKey": "Clé du rôle",
+      "roleKeyHint": "Valeur envoyée au projet, sans espace (ex. passager).",
+      "roleLabel": "Nom affiché sur le bouton",
+      "addRole": "Ajouter un rôle",
+      "openTourEditor": "Ouvrir l'éditeur de visite ({{count}} étape(s))",
+      "help": {
+        "video": "Niveau 2 — vidéo de 60 à 90 secondes, sous-titrée.",
+        "visite": "Niveau 3 — visite guidée interactive, construite à partir de captures.",
+        "notebook": "Niveau 4 — notebook exporté en HTML (jupyter nbconvert --to html).",
+        "playground": "Niveau 5 — application Gradio ou Streamlit (Hugging Face Spaces), affichée dans la fiche.",
+        "bac_a_sable": "Niveau 6 — application déployée, avec connexion en un clic par rôle.",
+        "lien_externe": "Démo de secours ou fichier à télécharger (Arcade, Supademo, release GitHub…)."
+      },
+      "urlHint": {
+        "video": "Fichier MP4/WebM de la bibliothèque, ou lien YouTube non répertorié.",
+        "notebook": "Fichier .html de la bibliothèque.",
+        "playground": "Adresse du Space, ex. https://nom-espace.hf.space. Vide : « indisponible » est affiché.",
+        "bac_a_sable": "Adresse de l'application de démo : elle sert à réveiller le serveur avant la connexion.",
+        "lien_externe": "Adresse complète en https://"
+      }
+    },
+    "tour": {
+      "title": "Éditeur de visite guidée",
+      "description": "Importez les captures dans l'ordre du parcours, tracez la zone à cliquer sur chacune et écrivez sa légende.",
+      "backToProject": "Retour au projet",
+      "importScreens": "Importer des captures",
+      "importHint": "Sélectionnez plusieurs fichiers d'un coup : ils deviennent des étapes, dans l'ordre de leur nom. Vous pouvez aussi choisir une image déjà importée.",
+      "stepsAdded": "Étape(s) ajoutée(s).",
+      "frame": "Cadre",
+      "steps": "Étapes de la visite",
+      "noSteps": "Aucune étape. Commencez par importer les captures d'écran du parcours.",
+      "stepTitle": "Étape {{position}}",
+      "noCaption": "Sans légende",
+      "noZone": "Sans zone cliquable",
+      "drawHint": "Tracez un rectangle sur la capture avec la souris (ou le doigt) pour définir la zone à cliquer. Sans zone, le visiteur avance avec « Suivant ».",
+      "zoneCoordinates": "Zone cliquable, en % de l'image",
+      "zone": {
+        "x": "Gauche",
+        "y": "Haut",
+        "largeur": "Largeur",
+        "hauteur": "Hauteur"
+      },
+      "clearZone": "Effacer la zone",
+      "caption": "Légende",
+      "saveStep": "Enregistrer l'étape",
+      "replaceImage": "Remplacer la capture",
+      "deleteStep": "Supprimer l'étape"
+    },
+    "history": {
+      "description": "Chaque enregistrement garde une copie de l'état précédent du projet (titre, contenu, badges, métiers, technologies).",
+      "empty": "Aucune version antérieure : le projet n'a pas encore été modifié.",
+      "restore": "Restaurer cette version",
+      "confirmRestore": "Remplacer le contenu actuel par cette version ? L'état actuel sera gardé dans l'historique.",
+      "restored": "Version restaurée."
+    },
+    "skill": {
+      "description": "Chaque compétence appartient à un domaine et porte un niveau. Le site affiche les projets qui la prouvent.",
+      "create": "Nouvelle compétence",
+      "edit": "Modifier la compétence",
+      "empty": "Aucune compétence pour l'instant.",
+      "name": "Nom",
+      "existingDomain": "Reprendre un domaine existant",
+      "newDomain": "Nouveau domaine (à saisir ci-dessous)",
+      "domain": "Domaine",
+      "level": "Niveau",
+      "usedIn": "utilisée dans {{count}} projet(s)"
+    },
+    "timeline": {
+      "description": "Formations, stage, certifications, hackathons et challenges : une seule frise sur la page À propos, triée par date.",
+      "create": "Nouvelle entrée",
+      "edit": "Modifier l'entrée",
+      "empty": "Le parcours est vide.",
+      "type": "Type",
+      "entryTitle": "Titre",
+      "organisation": "Établissement ou organisateur",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "endDateHint": "Vide : toujours en cours.",
+      "descriptionField": "Description",
+      "proof": "Justificatif (PDF ou image)",
+      "proofHint": "Diplôme, attestation, certificat… Facultatif."
+    },
+    "profile": {
+      "description": "Ces informations alimentent l'accueil, la page À propos et la page Contact.",
+      "identity": "Identité",
+      "name": "Nom affiché",
+      "headline": "Titre",
+      "contact": "Coordonnées et CV",
+      "email": "E-mail de contact (public)",
+      "cv": "CV (PDF)",
+      "presentation": "Présentation",
+      "sections": {
+        "accroche": "Positionnement",
+        "profil": "Profil",
+        "orientation": "Orientation",
+        "methode": "Comment je travaille"
+      },
+      "sectionHints": {
+        "accroche": "Deux phrases, affichées sur l'accueil.",
+        "profil": "Page À propos : du génie logiciel à la Data.",
+        "orientation": "Page À propos : ce que vous recherchez.",
+        "methode": "Page À propos : votre façon de travailler."
+      }
+    },
+    "media": {
+      "description": "Images, vidéos, PDF (CV, attestations), notebooks HTML et sous-titres. Les noms de fichiers sont régénérés à l'import.",
+      "library": "Bibliothèque de médias",
+      "choose": "Choisir un fichier",
+      "uploadOne": "Importer un fichier",
+      "uploadMany": "Importer des fichiers",
+      "uploading": "Import en cours…",
+      "uploaded": "Fichier(s) importé(s).",
+      "limits": "Images 5 Mo · PDF 10 Mo · notebooks 15 Mo · vidéos 50 Mo.",
+      "filterType": "Type",
+      "allTypes": "Tous les types",
+      "search": "Rechercher par nom",
+      "empty": "Aucun fichier.",
+      "copyUrl": "Copier l'adresse",
+      "copyMarkdown": "Copier pour un texte",
+      "copied": "Copié dans le presse-papiers."
+    },
+    "messages": {
+      "description": "Messages reçus par le formulaire de contact. Une notification part aussi par e-mail.",
+      "empty": "Aucun message.",
+      "handled": "Traité",
+      "toHandle": "À traiter",
+      "markHandled": "Marquer comme traité",
+      "markToHandle": "Remettre à traiter",
+      "reply": "Répondre par e-mail"
+    },
+    "access": {
+      "description": "Demandes d'accès aux projets confidentiels. Accepter envoie au visiteur un code valable 7 jours.",
+      "empty": "Aucune demande d'accès.",
+      "accept": "Accepter",
+      "refuse": "Refuser",
+      "revoke": "Révoquer le code",
+      "confirmRevoke": "Révoquer ce code ? Le visiteur ne pourra plus consulter le projet.",
+      "accepted": "Demande acceptée : le code a été envoyé par e-mail.",
+      "refused": "Demande refusée : le visiteur est prévenu par e-mail.",
+      "revoked": "Code révoqué.",
+      "expires": "code valable jusqu'au {{date}}",
+      "log": "Journal des consultations ({{count}})",
+      "logTitle": "Consultations faites avec ce code",
+      "noConsultation": "Ce code n'a pas encore été utilisé.",
+      "codeTitle": "Code d'accès envoyé",
+      "codeNotice": "Ce code vient d'être envoyé au visiteur par e-mail. Il n'est affiché qu'une fois : seule son empreinte est conservée."
+    },
+    "publication": {
+      "explanation": "Le site public est fait de pages générées à l'avance : il s'affiche même si le serveur est en veille. Après avoir publié ou modifié du contenu, cliquez ici pour régénérer ces pages.",
+      "scope": "Seuls les projets au statut « Publié » sont inclus. La mise à jour prend une à deux minutes.",
+      "button": "Mettre le site à jour",
+      "started": "Mise à jour du site lancée.",
+      "done": "Mise à jour lancée. Dans une à deux minutes, vérifiez le résultat sur"
+    }
   }
 }
