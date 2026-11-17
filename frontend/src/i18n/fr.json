@@ -1,10 +1,10 @@
 {
   "common": {
     "loading": "Chargement…",
-    "siteUnderConstruction": "Site en cours de construction",
     "close": "Fermer",
     "menu": "Menu",
-    "skipToContent": "Aller au contenu"
+    "skipToContent": "Aller au contenu",
+    "comingSoon": "Contenu à venir."
   },
   "language": {
     "label": "Langue",
@@ -167,11 +167,13 @@
       "demo": "Démo en ligne",
       "documentation": "Documentation",
       "rapport": "Rapport"
-    }
+    },
+    "backToProjects": "← Tous les projets"
   },
   "timeline": {
     "ongoing": "aujourd'hui",
-    "proof": "Justificatif"
+    "proof": "Justificatif",
+    "viewProof": "Voir le justificatif"
   },
   "admin": {
     "title": "Administration",
@@ -450,6 +452,108 @@
       "button": "Mettre le site à jour",
       "started": "Mise à jour du site lancée.",
       "done": "Mise à jour lancée. Dans une à deux minutes, vérifiez le résultat sur"
+    }
+  },
+  "site": {
+    "defaultName": "Portfolio"
+  },
+  "nav": {
+    "label": "Menu principal",
+    "projects": "Projets",
+    "about": "À propos",
+    "skills": "Compétences",
+    "contact": "Contact"
+  },
+  "metier": {
+    "label": "Je recrute pour un poste de…",
+    "all": "Tous les métiers"
+  },
+  "home": {
+    "cv": "CV",
+    "featured": "Projets phares",
+    "allProjects": "Voir tous les projets"
+  },
+  "projects": {
+    "lead": "Chaque projet peut être vu, parcouru ou essayé : choisissez un métier pour mettre en tête les plus pertinents.",
+    "empty": "Aucun projet publié pour l'instant.",
+    "noMatch": "Aucun projet ne correspond à ces filtres.",
+    "count_one": "{{count}} projet",
+    "count_other": "{{count}} projets",
+    "filters": {
+      "all": "Tous",
+      "domain": "Domaine",
+      "technology": "Technologie",
+      "demo": "Type de démo",
+      "category": "Catégorie",
+      "reset": "Effacer les filtres"
+    }
+  },
+  "about": {
+    "profile": "Profil",
+    "direction": "Orientation",
+    "timeline": "Parcours"
+  },
+  "skills": {
+    "lead": "Chaque compétence renvoie aux projets qui la prouvent.",
+    "usedIn_one": "Utilisée dans {{count}} projet :",
+    "usedIn_other": "Utilisée dans {{count}} projets :",
+    "noProject": "Pas encore de projet publié avec cette compétence."
+  },
+  "contact": {
+    "lead": "Une question, une offre de stage ou un premier emploi à proposer ? Écrivez-moi.",
+    "details": "Coordonnées",
+    "downloadCv": "Télécharger le CV (PDF)",
+    "formTitle": "Envoyer un message",
+    "name": "Nom",
+    "nameRequired": "Indiquez votre nom.",
+    "email": "E-mail",
+    "emailInvalid": "Saisissez une adresse e-mail valide.",
+    "message": "Message",
+    "messageTooShort": "Écrivez au moins 10 caractères.",
+    "send": "Envoyer",
+    "sending": "Envoi…",
+    "slowNotice": "Le serveur peut mettre jusqu'à une minute à se réveiller. Merci de patienter.",
+    "sent": "Message envoyé. Merci, je vous réponds rapidement."
+  },
+  "access": {
+    "title": "Projet confidentiel",
+    "explanation": "Ce projet a été réalisé pour un client : son contenu détaillé est consultable sur demande. Si vous avez déjà reçu un code, saisissez-le ; sinon, demandez l'accès.",
+    "codeTitle": "J'ai un code d'accès",
+    "code": "Code d'accès",
+    "codeHint": "Reçu par e-mail, valable 7 jours.",
+    "unlock": "Afficher le projet",
+    "requestTitle": "Demander l'accès",
+    "company": "Entreprise",
+    "companyRequired": "Indiquez votre entreprise.",
+    "reason": "Motif de la demande",
+    "request": "Envoyer la demande",
+    "requested": "Demande envoyée. Si elle est acceptée, vous recevrez un code par e-mail."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "text": "Cette page n'existe pas ou n'est plus publiée.",
+    "home": "Retour à l'accueil"
+  },
+  "seo": {
+    "projects": {
+      "title": "Projets",
+      "description": "Les projets de {{name}} : data, big data et développement full stack, avec démos à essayer."
+    },
+    "about": {
+      "title": "À propos",
+      "description": "Profil, façon de travailler et parcours de {{name}}."
+    },
+    "skills": {
+      "title": "Compétences",
+      "description": "Les compétences de {{name}}, avec les projets qui les prouvent."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Contacter {{name}} : e-mail, LinkedIn, GitHub, CV et formulaire."
+    },
+    "notFound": {
+      "title": "Page introuvable",
+      "description": "Cette page n'existe pas."
     }
   }
 }
