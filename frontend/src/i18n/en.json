@@ -1,10 +1,10 @@
 {
   "common": {
     "loading": "Loading…",
-    "siteUnderConstruction": "Site under construction",
     "close": "Close",
     "menu": "Menu",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "comingSoon": "Content coming soon."
   },
   "language": {
     "label": "Language",
@@ -167,11 +167,13 @@
       "demo": "Live demo",
       "documentation": "Documentation",
       "rapport": "Report"
-    }
+    },
+    "backToProjects": "← All projects"
   },
   "timeline": {
     "ongoing": "present",
-    "proof": "Proof"
+    "proof": "Proof",
+    "viewProof": "View proof"
   },
   "admin": {
     "title": "Administration",
@@ -450,6 +452,108 @@
       "button": "Update the site",
       "started": "Site update started.",
       "done": "Update started. In a minute or two, check the result at"
+    }
+  },
+  "site": {
+    "defaultName": "Portfolio"
+  },
+  "nav": {
+    "label": "Main menu",
+    "projects": "Projects",
+    "about": "About",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "metier": {
+    "label": "I am hiring for a role in…",
+    "all": "All roles"
+  },
+  "home": {
+    "cv": "CV",
+    "featured": "Featured projects",
+    "allProjects": "View all projects"
+  },
+  "projects": {
+    "lead": "Every project can be viewed, browsed or tried: pick a role to bring the most relevant ones to the top.",
+    "empty": "No published project yet.",
+    "noMatch": "No project matches these filters.",
+    "count_one": "{{count}} project",
+    "count_other": "{{count}} projects",
+    "filters": {
+      "all": "All",
+      "domain": "Domain",
+      "technology": "Technology",
+      "demo": "Demo type",
+      "category": "Category",
+      "reset": "Clear filters"
+    }
+  },
+  "about": {
+    "profile": "Profile",
+    "direction": "Direction",
+    "timeline": "Background"
+  },
+  "skills": {
+    "lead": "Each skill links to the projects that prove it.",
+    "usedIn_one": "Used in {{count}} project:",
+    "usedIn_other": "Used in {{count}} projects:",
+    "noProject": "No published project with this skill yet."
+  },
+  "contact": {
+    "lead": "A question, an internship or a first job to offer? Write to me.",
+    "details": "Contact details",
+    "downloadCv": "Download CV (PDF)",
+    "formTitle": "Send a message",
+    "name": "Name",
+    "nameRequired": "Please enter your name.",
+    "email": "Email",
+    "emailInvalid": "Enter a valid email address.",
+    "message": "Message",
+    "messageTooShort": "Write at least 10 characters.",
+    "send": "Send",
+    "sending": "Sending…",
+    "slowNotice": "The server can take up to a minute to wake up. Thank you for waiting.",
+    "sent": "Message sent. Thank you, I will reply soon."
+  },
+  "access": {
+    "title": "Confidential project",
+    "explanation": "This project was carried out for a client: its detailed content is available on request. If you already received a code, enter it; otherwise, request access.",
+    "codeTitle": "I have an access code",
+    "code": "Access code",
+    "codeHint": "Received by email, valid for 7 days.",
+    "unlock": "Show the project",
+    "requestTitle": "Request access",
+    "company": "Company",
+    "companyRequired": "Please enter your company.",
+    "reason": "Reason for the request",
+    "request": "Send request",
+    "requested": "Request sent. If it is accepted, you will receive a code by email."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "This page does not exist or is no longer published.",
+    "home": "Back to home"
+  },
+  "seo": {
+    "projects": {
+      "title": "Projects",
+      "description": "Projects by {{name}}: data, big data and full stack development, with demos to try."
+    },
+    "about": {
+      "title": "About",
+      "description": "Profile, way of working and background of {{name}}."
+    },
+    "skills": {
+      "title": "Skills",
+      "description": "Skills of {{name}}, with the projects that prove them."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Contact {{name}}: email, LinkedIn, GitHub, CV and form."
+    },
+    "notFound": {
+      "title": "Page not found",
+      "description": "This page does not exist."
     }
   }
 }
