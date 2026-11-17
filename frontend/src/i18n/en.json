@@ -1,6 +1,455 @@
 {
   "common": {
     "loading": "Loading…",
-    "siteUnderConstruction": "Site under construction"
+    "siteUnderConstruction": "Site under construction",
+    "close": "Close",
+    "menu": "Menu",
+    "skipToContent": "Skip to content"
+  },
+  "language": {
+    "label": "Language",
+    "fr": "French",
+    "en": "English"
+  },
+  "badges": {
+    "label": "Project badges",
+    "code": "Code",
+    "etat": "Status",
+    "demo": "Demo",
+    "demoLevel": {
+      "aucune": "Coming soon",
+      "lien_externe": "External link",
+      "captures": "Screenshots",
+      "video": "Video",
+      "visite": "Guided tour",
+      "notebook": "Notebook",
+      "playground": "Playground",
+      "bac_a_sable": "Live sandbox"
+    }
+  },
+  "enums": {
+    "categorie": {
+      "personnel": "Personal project",
+      "academique": "Academic project",
+      "collaboratif": "Team project"
+    },
+    "etat": {
+      "termine": "Completed",
+      "en_cours": "In progress",
+      "prototype": "Prototype"
+    },
+    "acces_code": {
+      "public": "Public",
+      "prive": "Private",
+      "confidentiel": "Confidential (client)"
+    },
+    "statut_publication": {
+      "brouillon": "Draft",
+      "publie": "Published",
+      "archive": "Archived"
+    },
+    "niveau": {
+      "notions": "Basics",
+      "pratique": "Working knowledge",
+      "bonne_maitrise": "Proficient"
+    },
+    "type_demo": {
+      "video": "Video",
+      "visite": "Guided tour",
+      "notebook": "Notebook",
+      "playground": "Playground",
+      "bac_a_sable": "Live sandbox",
+      "lien_externe": "External link",
+      "captures": "Screenshots"
+    },
+    "type_media": {
+      "image": "Image",
+      "video": "Video",
+      "pdf": "PDF",
+      "notebook": "HTML notebook",
+      "sous_titres": "Subtitles"
+    },
+    "type_parcours": {
+      "formation": "Education",
+      "stage": "Internship",
+      "certification": "Certification",
+      "hackathon": "Hackathon",
+      "challenge": "Challenge"
+    },
+    "statut_demande": {
+      "en_attente": "Pending",
+      "acceptee": "Accepted",
+      "refusee": "Refused",
+      "revoquee": "Revoked"
+    },
+    "cadre": {
+      "navigateur": "Browser",
+      "telephone": "Phone",
+      "aucun": "No frame"
+    }
+  },
+  "errors": {
+    "erreur_inconnue": "Something went wrong. Please try again in a moment.",
+    "chargement": "Loading failed. Please reload the page.",
+    "serveur_injoignable": "The server is not responding yet (it may be asleep). Try again in a minute.",
+    "donnees_invalides": "Some values are invalid. Check the fields (https:// addresses, dates, required texts).",
+    "introuvable": "Item not found.",
+    "identifiants_invalides": "Incorrect email or password.",
+    "trop_de_requetes": "Too many attempts. Wait a minute before trying again.",
+    "slug_deja_utilise": "This address (slug) is already used by another project.",
+    "reference_inconnue": "A selected job or skill no longer exists. Reload the page.",
+    "nom_deja_utilise": "A skill with this name already exists.",
+    "ordre_incomplet": "The list changed in the meantime. Reload the page before reordering.",
+    "visite_avec_etapes": "This tour already has steps: its type can no longer change.",
+    "demo_sans_etapes": "Only a guided tour can have steps.",
+    "type_de_fichier_refuse": "File type refused. Accepted: PNG, JPEG, WebP, GIF, MP4, WebM, PDF, HTML, VTT.",
+    "fichier_trop_volumineux": "File too large (images 5 MB, PDF 10 MB, notebooks 15 MB, videos 50 MB).",
+    "contenu_de_fichier_invalide": "The file content does not match its extension.",
+    "media_utilise": "This file is still in use (guided tour, demo, CV or proof). Remove it from there first.",
+    "demande_deja_traitee": "This request has already been handled.",
+    "demande_non_acceptee": "Only an accepted request can be revoked.",
+    "deploy_hook_non_configure": "Publishing is not configured (DEPLOY_HOOK_URL variable missing).",
+    "deploy_hook_en_echec": "The publishing service did not respond. Try again in a moment.",
+    "code_invalide": "This code is invalid or has expired.",
+    "projet_non_confidentiel": "This project is already freely available."
+  },
+  "tour": {
+    "empty": "This guided tour has no screen yet.",
+    "label": "Interactive guided tour",
+    "roleDescription": "guided tour",
+    "step": "Step {{current}} of {{total}}",
+    "hotspot": "Area to click: go to the next screen",
+    "progress": "Tour progress",
+    "previous": "Previous",
+    "next": "Next",
+    "restart": "Start over"
+  },
+  "demo": {
+    "tabs": "Available demos",
+    "unavailable": "This demo is not available yet.",
+    "openInNewTab": "Open in a new tab",
+    "openExternal": "Open the demo",
+    "downloadVideo": "Download the video",
+    "notebookError": "The notebook could not be displayed here.",
+    "playgroundUnavailable": "The playground is not available at the moment.",
+    "playgroundHint": "The playground is hosted for free: its first load can take about thirty seconds.",
+    "sandboxNotice": "Demo mode — fictitious data. No account needed: pick a role and you are signed in automatically.",
+    "sandboxWaking": "Starting the demo (about 30 s)…",
+    "sandboxUnreachable": "The demo server is not responding right now. You can still try to open the demo.",
+    "sandboxTourMeanwhile": "View the guided tour in the meantime",
+    "exploreAs": "Explore as {{role}}"
+  },
+  "project": {
+    "metiers": "Related jobs",
+    "openDemo": "View the demo: {{demo}}",
+    "demo": "Demo",
+    "context": "Context and problem",
+    "goalsAndResults": "Goals and results",
+    "goals": "Goals",
+    "results": "Results",
+    "howIWork": "How I work",
+    "method": {
+      "regles_metier": "Business rules",
+      "architecture": "Architecture diagram",
+      "modele_donnees": "Data model",
+      "parcours_utilisateur": "User journey",
+      "decisions": "Decisions and their rationale"
+    },
+    "technologies": "Technologies",
+    "gallery": "Gallery",
+    "enlarge": "Enlarge: {{caption}}",
+    "challengesAndLearnings": "Challenges and learnings",
+    "challenges": "Challenges",
+    "learnings": "Learnings",
+    "links": "Links",
+    "link": {
+      "github": "Code on GitHub",
+      "demo": "Live demo",
+      "documentation": "Documentation",
+      "rapport": "Report"
+    }
+  },
+  "timeline": {
+    "ongoing": "present",
+    "proof": "Proof"
+  },
+  "admin": {
+    "title": "Administration",
+    "navLabel": "Administration menu",
+    "nav": {
+      "dashboard": "Dashboard",
+      "projects": "Projects",
+      "skills": "Skills",
+      "timeline": "Timeline",
+      "profile": "Profile",
+      "media": "Media",
+      "messages": "Messages",
+      "accessRequests": "Access requests",
+      "publication": "Publishing"
+    },
+    "lastLogin": "Last sign-in: {{date}}",
+    "viewSite": "View the site",
+    "logout": "Sign out",
+    "wakingApi": "Connecting to the server… (it can take a minute to wake up)",
+    "save": "Save",
+    "saved": "Saved.",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleted": "Deleted.",
+    "reordered": "Order updated.",
+    "preview": "Preview",
+    "required": "This field is required.",
+    "confirmDelete": "Permanently delete this item?",
+    "unsavedChanges": "Unsaved changes.",
+    "moveUp": "Move {{item}} up",
+    "moveDown": "Move {{item}} down",
+    "markdownHint": "Long texts accept Markdown: **bold**, lists with \"-\", headings with \"##\", links [text](https://…), images ![caption](address copied from Media).",
+    "login": {
+      "title": "Sign in",
+      "email": "Email",
+      "emailInvalid": "Enter a valid email address.",
+      "password": "Password",
+      "submit": "Sign in"
+    },
+    "dashboard": {
+      "period": "Period",
+      "lastDays": "Last {{count}} days",
+      "views": "Project page views",
+      "demoLaunches": "Demos launched",
+      "unreadMessages": "Messages to handle",
+      "pendingRequests": "Pending access requests",
+      "viewsPerProject": "Views per project",
+      "demosByType": "Demos launched by type",
+      "chosenMetiers": "Job chosen by visitors",
+      "latestMessages": "Latest messages",
+      "latestRequests": "Latest access requests",
+      "noData": "No data for this period."
+    },
+    "project": {
+      "singular": "Project",
+      "listDescription": "The order of this list is the display order on the site. A draft is never visible to visitors.",
+      "create": "New project",
+      "empty": "No project yet.",
+      "featured": "Featured project",
+      "feature": "Mark as featured",
+      "unfeature": "Remove featured",
+      "publish": "Publish",
+      "unpublish": "Back to draft",
+      "archive": "Archive",
+      "statusChanged": "Status updated.",
+      "publishReminder": "Remember to \"Update the site\" (Publishing menu) so visitors see the changes.",
+      "backToList": "All projects",
+      "backToEditor": "Back to the editor",
+      "previewBanner": "Preview: this is the page as visitors will see it.",
+      "saveFirst": "Save the project first to add its gallery and demos.",
+      "tabs": {
+        "general": "General",
+        "contenu": "Page content",
+        "galerie": "Gallery",
+        "demos": "Demos",
+        "historique": "History"
+      },
+      "identity": "Project identity",
+      "title": "Title",
+      "titleRequired": "The French title is required.",
+      "slug": "Page address (slug)",
+      "slugHint": "The page will be available at /projets/this-address. Lowercase letters, digits and hyphens only.",
+      "slugInvalid": "Use only lowercase letters, digits and hyphens (e.g. telcom-ci).",
+      "summary": "One-sentence summary",
+      "classification": "Category and badges",
+      "category": "Category",
+      "codeHint": "\"Confidential\": the page only shows its header; the rest requires an access code.",
+      "featuredLabel": "Featured project (shown on the home page)",
+      "metiers": "Related jobs",
+      "metiersHint": "The project moves up when the visitor picks one of these jobs — the higher the relevance, the higher it ranks.",
+      "relevanceFor": "Relevance for {{metier}}",
+      "relevance": {
+        "3": "High relevance",
+        "2": "Medium relevance",
+        "1": "Low relevance"
+      },
+      "noTechnologies": "No skill exists yet. Add some in",
+      "figures": "Key figures",
+      "figuresHint": "Examples: \"0.87\" + \"F1 score\", \"2.4 M\" + \"rows processed\".",
+      "figureValue": "Value",
+      "figureLabel": "Label",
+      "addFigure": "Add a figure"
+    },
+    "gallery": {
+      "add": "Add images to the gallery",
+      "hint": "PNG, JPEG, WebP or GIF, 5 MB maximum per image.",
+      "empty": "The gallery is empty.",
+      "caption": "Caption",
+      "saveCaption": "Save caption",
+      "remove": "Remove from gallery",
+      "removed": "Image removed from the gallery (it stays in Media)."
+    },
+    "demo": {
+      "addLabel": "Type of demo to add",
+      "add": "Add demo",
+      "created": "Demo added. Fill it in below.",
+      "empty": "This project has no demo yet.",
+      "url": "Address",
+      "title": "Tab title (optional)",
+      "titleHint": "Empty: the demo type name is shown.",
+      "main": "Main demo (button at the top of the page)",
+      "subtitles": "Subtitles — {{language}} (.vtt file)",
+      "loginUrl": "Demo sign-in address",
+      "loginUrlHint": "The portfolio appends \"?role=role-key\" to it. This route belongs to the showcased project.",
+      "roles": "Available roles",
+      "roleKey": "Role key",
+      "roleKeyHint": "Value sent to the project, no spaces (e.g. passenger).",
+      "roleLabel": "Name shown on the button",
+      "addRole": "Add a role",
+      "openTourEditor": "Open the tour editor ({{count}} step(s))",
+      "help": {
+        "video": "Level 2 — 60 to 90 second video, with subtitles.",
+        "visite": "Level 3 — interactive guided tour built from screenshots.",
+        "notebook": "Level 4 — notebook exported to HTML (jupyter nbconvert --to html).",
+        "playground": "Level 5 — Gradio or Streamlit app (Hugging Face Spaces), shown inside the page.",
+        "bac_a_sable": "Level 6 — deployed application with one-click sign-in per role.",
+        "lien_externe": "Fallback demo or downloadable file (Arcade, Supademo, GitHub release…)."
+      },
+      "urlHint": {
+        "video": "MP4/WebM file from the library, or unlisted YouTube link.",
+        "notebook": ".html file from the library.",
+        "playground": "Space address, e.g. https://space-name.hf.space. Empty: \"unavailable\" is shown.",
+        "bac_a_sable": "Address of the demo application: used to wake the server before sign-in.",
+        "lien_externe": "Full https:// address"
+      }
+    },
+    "tour": {
+      "title": "Guided tour editor",
+      "description": "Import the screenshots in journey order, draw the area to click on each one and write its caption.",
+      "backToProject": "Back to the project",
+      "importScreens": "Import screenshots",
+      "importHint": "Select several files at once: they become steps, in the order of their names. You can also pick an already imported image.",
+      "stepsAdded": "Step(s) added.",
+      "frame": "Frame",
+      "steps": "Tour steps",
+      "noSteps": "No step yet. Start by importing the screenshots of the journey.",
+      "stepTitle": "Step {{position}}",
+      "noCaption": "No caption",
+      "noZone": "No clickable area",
+      "drawHint": "Draw a rectangle on the screenshot with the mouse (or a finger) to define the area to click. Without an area, the visitor moves on with \"Next\".",
+      "zoneCoordinates": "Clickable area, in % of the image",
+      "zone": {
+        "x": "Left",
+        "y": "Top",
+        "largeur": "Width",
+        "hauteur": "Height"
+      },
+      "clearZone": "Clear area",
+      "caption": "Caption",
+      "saveStep": "Save step",
+      "replaceImage": "Replace screenshot",
+      "deleteStep": "Delete step"
+    },
+    "history": {
+      "description": "Each save keeps a copy of the previous state of the project (title, content, badges, jobs, technologies).",
+      "empty": "No earlier version: the project has not been modified yet.",
+      "restore": "Restore this version",
+      "confirmRestore": "Replace the current content with this version? The current state will be kept in the history.",
+      "restored": "Version restored."
+    },
+    "skill": {
+      "description": "Each skill belongs to a domain and has a level. The site shows the projects that prove it.",
+      "create": "New skill",
+      "edit": "Edit skill",
+      "empty": "No skill yet.",
+      "name": "Name",
+      "existingDomain": "Reuse an existing domain",
+      "newDomain": "New domain (type it below)",
+      "domain": "Domain",
+      "level": "Level",
+      "usedIn": "used in {{count}} project(s)"
+    },
+    "timeline": {
+      "description": "Education, internship, certifications, hackathons and challenges: a single timeline on the About page, sorted by date.",
+      "create": "New entry",
+      "edit": "Edit entry",
+      "empty": "The timeline is empty.",
+      "type": "Type",
+      "entryTitle": "Title",
+      "organisation": "Institution or organiser",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "endDateHint": "Empty: still ongoing.",
+      "descriptionField": "Description",
+      "proof": "Proof (PDF or image)",
+      "proofHint": "Diploma, statement, certificate… Optional."
+    },
+    "profile": {
+      "description": "This information feeds the home, About and Contact pages.",
+      "identity": "Identity",
+      "name": "Displayed name",
+      "headline": "Headline",
+      "contact": "Contact details and CV",
+      "email": "Contact email (public)",
+      "cv": "CV (PDF)",
+      "presentation": "Presentation",
+      "sections": {
+        "accroche": "Positioning",
+        "profil": "Profile",
+        "orientation": "Direction",
+        "methode": "How I work"
+      },
+      "sectionHints": {
+        "accroche": "Two sentences, shown on the home page.",
+        "profil": "About page: from software engineering to data.",
+        "orientation": "About page: what you are looking for.",
+        "methode": "About page: the way you work."
+      }
+    },
+    "media": {
+      "description": "Images, videos, PDFs (CV, statements), HTML notebooks and subtitles. File names are regenerated on import.",
+      "library": "Media library",
+      "choose": "Choose a file",
+      "uploadOne": "Import a file",
+      "uploadMany": "Import files",
+      "uploading": "Importing…",
+      "uploaded": "File(s) imported.",
+      "limits": "Images 5 MB · PDF 10 MB · notebooks 15 MB · videos 50 MB.",
+      "filterType": "Type",
+      "allTypes": "All types",
+      "search": "Search by name",
+      "empty": "No file.",
+      "copyUrl": "Copy address",
+      "copyMarkdown": "Copy for a text",
+      "copied": "Copied to the clipboard."
+    },
+    "messages": {
+      "description": "Messages received through the contact form. A notification is also sent by email.",
+      "empty": "No message.",
+      "handled": "Handled",
+      "toHandle": "To handle",
+      "markHandled": "Mark as handled",
+      "markToHandle": "Mark as to handle",
+      "reply": "Reply by email"
+    },
+    "access": {
+      "description": "Access requests for confidential projects. Accepting sends the visitor a code valid for 7 days.",
+      "empty": "No access request.",
+      "accept": "Accept",
+      "refuse": "Refuse",
+      "revoke": "Revoke code",
+      "confirmRevoke": "Revoke this code? The visitor will no longer be able to view the project.",
+      "accepted": "Request accepted: the code has been emailed.",
+      "refused": "Request refused: the visitor is notified by email.",
+      "revoked": "Code revoked.",
+      "expires": "code valid until {{date}}",
+      "log": "Consultation log ({{count}})",
+      "logTitle": "Views made with this code",
+      "noConsultation": "This code has not been used yet.",
+      "codeTitle": "Access code sent",
+      "codeNotice": "This code has just been emailed to the visitor. It is shown only once: only its fingerprint is stored."
+    },
+    "publication": {
+      "explanation": "The public site is made of pages generated in advance: it displays even when the server is asleep. After publishing or editing content, click here to regenerate those pages.",
+      "scope": "Only projects with the \"Published\" status are included. The update takes one to two minutes.",
+      "button": "Update the site",
+      "started": "Site update started.",
+      "done": "Update started. In a minute or two, check the result at"
+    }
   }
 }
