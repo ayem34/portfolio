@@ -15,6 +15,7 @@ import { Badge } from './Badge';
 import { DemoPlayer } from './demo/DemoPlayer';
 import { Markdown } from './Markdown';
 import { Modal } from './Modal';
+import { PageSection } from './PageSection';
 import { ProjectBadges } from './ProjectBadges';
 
 interface ProjectViewProps {
@@ -23,24 +24,6 @@ interface ProjectViewProps {
   onDemoLaunch?: (demo: PublicDemo) => void;
   /** Affiché à la place du contenu quand le projet est protégé (accès sur demande). */
   lockedContent?: ReactNode;
-}
-
-interface SectionProps {
-  id?: string;
-  title: string;
-  light?: boolean;
-  children: ReactNode;
-}
-
-function Section({ id, title, light = false, children }: SectionProps) {
-  return (
-    <section id={id} className={`scroll-mt-20 py-12 sm:py-16 ${light ? 'section-light' : ''}`}>
-      <div className="container-page">
-        <h2 className="mb-6 text-2xl font-bold sm:text-3xl">{title}</h2>
-        {children}
-      </div>
-    </section>
-  );
 }
 
 function Gallery({ medias }: { medias: PublicMedia[] }) {
@@ -138,21 +121,21 @@ export function ProjectView({ projet, onDemoLaunch, lockedContent }: ProjectView
       {projet.protege && lockedContent}
 
       {projet.demos.length > 0 && (
-        <Section id="demo" title={t('project.demo')}>
+        <PageSection id="demo" title={t('project.demo')}>
           <DemoPlayer demos={projet.demos} activeId={activeDemoId} onSelect={selectDemo} />
-        </Section>
+        </PageSection>
       )}
 
       {contenu && has(contenu.contexte) && (
-        <Section title={t('project.context')} light>
+        <PageSection title={t('project.context')} light>
           <div className="max-w-3xl">
             <Markdown>{l(contenu.contexte)}</Markdown>
           </div>
-        </Section>
+        </PageSection>
       )}
 
       {contenu && (has(contenu.objectifs) || has(contenu.resultats) || figures.length > 0) && (
-        <Section title={t('project.goalsAndResults')}>
+        <PageSection title={t('project.goalsAndResults')}>
           {figures.length > 0 && (
             <dl className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {figures.map((chiffre, index) => (
@@ -177,11 +160,11 @@ export function ProjectView({ projet, onDemoLaunch, lockedContent }: ProjectView
               </div>
             )}
           </div>
-        </Section>
+        </PageSection>
       )}
 
       {contenu && methodSections.length > 0 && (
-        <Section title={t('project.howIWork')} light>
+        <PageSection title={t('project.howIWork')} light>
           <div className="grid gap-5 md:grid-cols-2">
             {methodSections.map((key) => (
               <div key={key} className="card p-5 sm:p-6">
@@ -190,11 +173,11 @@ export function ProjectView({ projet, onDemoLaunch, lockedContent }: ProjectView
               </div>
             ))}
           </div>
-        </Section>
+        </PageSection>
       )}
 
       {projet.technologies_detail.length > 0 && (
-        <Section title={t('project.technologies')}>
+        <PageSection title={t('project.technologies')}>
           <ul className="flex flex-wrap gap-3">
             {projet.technologies_detail.map((technologie) => (
               <li key={technologie.id}>
@@ -210,17 +193,17 @@ export function ProjectView({ projet, onDemoLaunch, lockedContent }: ProjectView
               </li>
             ))}
           </ul>
-        </Section>
+        </PageSection>
       )}
 
       {projet.galerie.length > 0 && (
-        <Section title={t('project.gallery')} light>
+        <PageSection title={t('project.gallery')} light>
           <Gallery medias={projet.galerie} />
-        </Section>
+        </PageSection>
       )}
 
       {contenu && (has(contenu.difficultes) || has(contenu.apprentissages)) && (
-        <Section title={t('project.challengesAndLearnings')}>
+        <PageSection title={t('project.challengesAndLearnings')}>
           <div className="grid gap-8 md:grid-cols-2">
             {has(contenu.difficultes) && (
               <div>
@@ -235,11 +218,11 @@ export function ProjectView({ projet, onDemoLaunch, lockedContent }: ProjectView
               </div>
             )}
           </div>
-        </Section>
+        </PageSection>
       )}
 
       {contenu && links.length > 0 && (
-        <Section title={t('project.links')} light>
+        <PageSection title={t('project.links')} light>
           <ul className="flex flex-wrap gap-3">
             {links.map((key) => (
               <li key={key}>
@@ -254,7 +237,7 @@ export function ProjectView({ projet, onDemoLaunch, lockedContent }: ProjectView
               </li>
             ))}
           </ul>
-        </Section>
+        </PageSection>
       )}
     </article>
   );

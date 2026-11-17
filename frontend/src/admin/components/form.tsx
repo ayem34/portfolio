@@ -1,73 +1,13 @@
 /** Briques de formulaire de l'admin. Tous les champs ont un libellé visible. */
 
-import {
-  type InputHTMLAttributes,
-  type ReactNode,
-  type SelectHTMLAttributes,
-  type TextareaHTMLAttributes,
-  useId,
-} from 'react';
+import { type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, useId } from 'react';
 import type { FieldPath, FieldValues, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { FieldShell, type FieldShellProps } from '../../components/FormFields';
 import { LANGUAGES } from '../../i18n';
 
-interface FieldShellProps {
-  label: string;
-  hint?: string;
-  error?: string;
-}
-
-function FieldShell({
-  id,
-  label,
-  hint,
-  error,
-  children,
-}: FieldShellProps & { id: string; children: ReactNode }) {
-  return (
-    <div>
-      <label htmlFor={id} className="field-label">
-        {label}
-      </label>
-      {children}
-      {hint && <p className="text-muted mt-1 text-sm">{hint}</p>}
-      {error && (
-        <p className="field-error" role="alert">
-          {error}
-        </p>
-      )}
-    </div>
-  );
-}
-
-export function TextField({
-  label,
-  hint,
-  error,
-  ...input
-}: FieldShellProps & InputHTMLAttributes<HTMLInputElement>) {
-  const id = useId();
-  return (
-    <FieldShell id={id} label={label} hint={hint} error={error}>
-      <input id={id} className="field" aria-invalid={Boolean(error)} {...input} />
-    </FieldShell>
-  );
-}
-
-export function TextAreaField({
-  label,
-  hint,
-  error,
-  ...textarea
-}: FieldShellProps & TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  const id = useId();
-  return (
-    <FieldShell id={id} label={label} hint={hint} error={error}>
-      <textarea id={id} className="field" rows={4} aria-invalid={Boolean(error)} {...textarea} />
-    </FieldShell>
-  );
-}
+export { Field as TextField, TextArea as TextAreaField } from '../../components/FormFields';
 
 export function SelectField({
   label,

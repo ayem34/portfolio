@@ -11,19 +11,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { ApiError } from '../lib/api';
-
-// --- Messages d'erreur traduits ---
-
-export function useErrorMessage(): (error: unknown) => string {
-  const { t } = useTranslation();
-  return useCallback(
-    (error) => {
-      const code = error instanceof ApiError ? error.code : 'erreur_inconnue';
-      return t(`errors.${code}`, { defaultValue: t('errors.erreur_inconnue') });
-    },
-    [t],
-  );
-}
+import { useErrorMessage } from '../lib/errors';
 
 // --- Notifications (zone aria-live) ---
 
