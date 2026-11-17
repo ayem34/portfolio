@@ -43,6 +43,7 @@ README.md
 - Chaque branche part de la branche du lot précédent. La PR du lot 1 cible `main` ; la PR du lot N cible la branche du lot N-1 (PR empilées). Ayem les fusionne dans l'ordre.
 - Petits commits clairs, messages en français, au format `type(portée): description` (ex. `feat(api): ajouter les routes des démos`).
 - Les commits doivent apparaître comme « Verified » sur GitHub. Si la signature n'est pas possible dans l'environnement, le signaler dans la première PR au lieu de continuer silencieusement.
+- - Ne jamais ajouter de ligne « Co-Authored-By » ni de mention de Claude dans les messages de commit ou les descriptions de pull request.
 
 ## Description attendue de chaque pull request
 
