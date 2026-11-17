@@ -46,6 +46,7 @@ frontend/
   vercel.json               réécritures (/api, /admin) pour Vercel
   Dockerfile
   scripts/
+    content.mjs             emplacements communs aux scripts de publication
     build-static.mjs        enchaîne : contenu → build client → build SSR → pré-rendu
     fetch-content.mjs       récupère le contenu publié et l'écrit en JSON
     prerender.mjs           génère le HTML de chaque page, sitemap.xml, robots.txt
@@ -182,7 +183,7 @@ Pourquoi :
 
 Étapes de `npm run build` (c'est la commande que lance Vercel, et celle du service local) :
 
-1. `fetch-content.mjs` appelle `GET /api/public/site` puis `GET /api/public/projets/{slug}` pour chaque projet publié (avec nouvelles tentatives pendant environ 3 minutes si l'API est en veille) et écrit `public/data/site.json` et `public/data/projets/{slug}.json`.
+1. `fetch-content.mjs` appelle `GET /api/public/site` puis `GET /api/public/projets/{slug}` pour chaque projet publié (avec nouvelles tentatives pendant environ 3 minutes si l'API est en veille) et enregistre le contenu en fichiers JSON (dossier de travail `.content/`), copiés ensuite dans le site sous `/data/site.json` et `/data/projets/{slug}.json`.
 2. `vite build` produit l'application navigateur.
 3. `vite build --ssr` produit la version serveur de l'application.
 4. `prerender.mjs` rend chaque page publique en HTML (`/`, `/projets`, `/projets/{slug}`, `/a-propos`, `/competences`, `/contact`, `404`), y insère le titre, la description, les balises Open Graph et le contenu nécessaire à l'hydratation, puis écrit `sitemap.xml` et `robots.txt`. L'admin reçoit une coquille vide `admin/index.html` (non indexée).
