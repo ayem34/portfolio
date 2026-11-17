@@ -34,7 +34,7 @@ test('chaque libellé utilisé dans le code existe dans les traductions', () => 
   const patterns = [
     /\bt\(\s*'([^']+)'/g,
     /(?:successKey|messageKey|labelKey)\s*[:=]\s*["']([^"']+)["']/g,
-    /\?\s*'((?:admin|demo|tour|project|errors|common)\.[\w.]+)'\s*:\s*'((?:admin|demo|tour|project|errors|common)\.[\w.]+)'/g,
+    /\?\s*'((?:admin|demo|tour|project|projects|contact|errors|common)\.[\w.]+)'\s*:\s*'((?:admin|demo|tour|project|projects|contact|errors|common)\.[\w.]+)'/g,
   ];
   const used = new Set<string>();
   for (const [path, source] of Object.entries(sources)) {
@@ -46,7 +46,10 @@ test('chaque libellé utilisé dans le code existe dans les traductions', () => 
     }
   }
   expect(used.size).toBeGreaterThan(100);
-  const missing = [...used].filter((key) => !frKeys.includes(key));
+  // Une clé au pluriel existe sous les formes « cle_one » et « cle_other ».
+  const missing = [...used].filter(
+    (key) => !frKeys.includes(key) && !frKeys.includes(`${key}_other`),
+  );
   expect(missing).toEqual([]);
 });
 
