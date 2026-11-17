@@ -1,0 +1,261 @@
+import { type ReactNode, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
+import { useLocalized } from '../lib/localized';
+import {
+  LIEN_KEYS,
+  type LocalizedText,
+  METHODE_KEYS,
+  type PublicDemo,
+  type PublicMedia,
+  type PublicProjetDetail,
+} from '../lib/types';
+import { Badge } from './Badge';
+import { DemoPlayer } from './demo/DemoPlayer';
+import { Markdown } from './Markdown';
+import { Modal } from './Modal';
+import { ProjectBadges } from './ProjectBadges';
+
+interface ProjectViewProps {
+  projet: PublicProjetDetail;
+  /** Appelé quand le visiteur lance une démo (statistiques). */
+  onDemoLaunch?: (demo: PublicDemo) => void;
+  /** Affiché à la place du contenu quand le projet est protégé (accès sur demande). */
+  lockedContent?: ReactNode;
+}
+
+interface SectionProps {
+  id?: string;
+  title: string;
+  light?: boolean;
+  children: ReactNode;
+}
+
+function Section({ id, title, light = false, children }: SectionProps) {
+  return (
+    <section id={id} className={`scroll-mt-20 py-12 sm:py-16 ${light ? 'section-light' : ''}`}>
+      <div className="container-page">
+        <h2 className="mb-6 text-2xl font-bold sm:text-3xl">{title}</h2>
+        {children}
+      </div>
+    </section>
+  );
+}
+
+function Gallery({ medias }: { medias: PublicMedia[] }) {
+  const { t } = useTranslation();
+  const l = useLocalized();
+  const [opened, setOpened] = useState<PublicMedia | null>(null);
+  return (
+    <>
+      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {medias.map((media) => {
+          const caption = l(media.legende);
+          return (
+            <li key={media.id}>
+              <figure className="card overflow-hidden">
+                <button
+                  type="button"
+                  className="block w-full cursor-zoom-in"
+                  onClick={() => setOpened(media)}
+                  aria-label={t('project.enlarge', { caption: caption || t('project.gallery') })}
+                >
+                  <img
+                    src={media.url}
+                    alt={caption}
+                    loading="lazy"
+                    className="aspect-video w-full object-cover"
+                  />
+                </button>
+                {caption && <figcaption className="text-muted p-3 text-sm">{caption}</figcaption>}
+              </figure>
+            </li>
+          );
+        })}
+      </ul>
+      <Modal
+        open={opened !== null}
+        onClose={() => setOpened(null)}
+        title={(opened && l(opened.legende)) || t('project.gallery')}
+        wide
+      >
+        {opened && (
+          <img src={opened.url} alt={l(opened.legende)} className="h-auto w-full rounded-lg" />
+        )}
+      </Modal>
+    </>
+  );
+}
+
+/**
+ * Fiche projet complète (section 4.1). Utilisée telle quelle par la page publique
+ * et par l'aperçu de l'admin.
+ */
+export function ProjectView({ projet, onDemoLaunch, lockedContent }: ProjectViewProps) {
+  const { t } = useTranslation();
+  const l = useLocalized();
+  const mainDemo = projet.demos[0];
+  const [activeDemoId, setActiveDemoId] = useState(mainDemo?.id ?? 0);
+
+  const selectDemo = (demo: PublicDemo) => {
+    setActiveDemoId(demo.id);
+    onDemoLaunch?.(demo);
+  };
+  const demoLabel = (demo: PublicDemo) => l(demo.config.titre) || t(`enums.type_demo.${demo.type}`);
+  const has = (text: LocalizedText | undefined) => Boolean(text && l(text).trim());
+
+  const contenu = projet.contenu;
+  const methodSections = contenu ? METHODE_KEYS.filter((key) => has(contenu.methode[key])) : [];
+  const links = contenu ? LIEN_KEYS.filter((key) => contenu.liens[key]) : [];
+  const figures = contenu?.chiffres.filter((chiffre) => chiffre.valeur) ?? [];
+
+  return (
+    <article>
+      <header className="py-12 sm:py-16">
+        <div className="container-page space-y-5">
+          <p className="eyebrow">{t(`enums.categorie.${projet.categorie}`)}</p>
+          <h1 className="text-4xl font-bold sm:text-5xl">{l(projet.titre)}</h1>
+          <p className="text-muted max-w-3xl text-lg sm:text-xl">{l(projet.resume)}</p>
+          {projet.metiers.length > 0 && (
+            <ul className="flex flex-wrap gap-2" aria-label={t('project.metiers')}>
+              {projet.metiers.map((metier) => (
+                <li key={metier.slug}>
+                  <Badge tone="info">{l(metier.nom)}</Badge>
+                </li>
+              ))}
+            </ul>
+          )}
+          <ProjectBadges projet={projet} />
+          {mainDemo && (
+            <a className="btn btn-primary" href="#demo" onClick={() => selectDemo(mainDemo)}>
+              {t('project.openDemo', { demo: demoLabel(mainDemo) })}
+            </a>
+          )}
+        </div>
+      </header>
+
+      {projet.protege && lockedContent}
+
+      {projet.demos.length > 0 && (
+        <Section id="demo" title={t('project.demo')}>
+          <DemoPlayer demos={projet.demos} activeId={activeDemoId} onSelect={selectDemo} />
+        </Section>
+      )}
+
+      {contenu && has(contenu.contexte) && (
+        <Section title={t('project.context')} light>
+          <div className="max-w-3xl">
+            <Markdown>{l(contenu.contexte)}</Markdown>
+          </div>
+        </Section>
+      )}
+
+      {contenu && (has(contenu.objectifs) || has(contenu.resultats) || figures.length > 0) && (
+        <Section title={t('project.goalsAndResults')}>
+          {figures.length > 0 && (
+            <dl className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {figures.map((chiffre, index) => (
+                <div key={index} className="card flex flex-col-reverse p-5">
+                  <dt className="text-muted mt-1 text-sm">{l(chiffre.libelle)}</dt>
+                  <dd className="font-display text-accent text-3xl font-bold">{chiffre.valeur}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          <div className="grid gap-8 md:grid-cols-2">
+            {has(contenu.objectifs) && (
+              <div>
+                <h3 className="mb-3 text-lg font-semibold">{t('project.goals')}</h3>
+                <Markdown>{l(contenu.objectifs)}</Markdown>
+              </div>
+            )}
+            {has(contenu.resultats) && (
+              <div>
+                <h3 className="mb-3 text-lg font-semibold">{t('project.results')}</h3>
+                <Markdown>{l(contenu.resultats)}</Markdown>
+              </div>
+            )}
+          </div>
+        </Section>
+      )}
+
+      {contenu && methodSections.length > 0 && (
+        <Section title={t('project.howIWork')} light>
+          <div className="grid gap-5 md:grid-cols-2">
+            {methodSections.map((key) => (
+              <div key={key} className="card p-5 sm:p-6">
+                <h3 className="mb-3 text-lg font-semibold">{t(`project.method.${key}`)}</h3>
+                <Markdown>{l(contenu.methode[key])}</Markdown>
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {projet.technologies_detail.length > 0 && (
+        <Section title={t('project.technologies')}>
+          <ul className="flex flex-wrap gap-3">
+            {projet.technologies_detail.map((technologie) => (
+              <li key={technologie.id}>
+                <Link
+                  to={`/competences#competence-${technologie.id}`}
+                  className="card hover:border-accent flex items-center gap-2 px-4 py-2 text-sm font-medium"
+                >
+                  {technologie.nom}
+                  <span className="text-muted font-normal">
+                    {t(`enums.niveau.${technologie.niveau}`)}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      {projet.galerie.length > 0 && (
+        <Section title={t('project.gallery')} light>
+          <Gallery medias={projet.galerie} />
+        </Section>
+      )}
+
+      {contenu && (has(contenu.difficultes) || has(contenu.apprentissages)) && (
+        <Section title={t('project.challengesAndLearnings')}>
+          <div className="grid gap-8 md:grid-cols-2">
+            {has(contenu.difficultes) && (
+              <div>
+                <h3 className="mb-3 text-lg font-semibold">{t('project.challenges')}</h3>
+                <Markdown>{l(contenu.difficultes)}</Markdown>
+              </div>
+            )}
+            {has(contenu.apprentissages) && (
+              <div>
+                <h3 className="mb-3 text-lg font-semibold">{t('project.learnings')}</h3>
+                <Markdown>{l(contenu.apprentissages)}</Markdown>
+              </div>
+            )}
+          </div>
+        </Section>
+      )}
+
+      {contenu && links.length > 0 && (
+        <Section title={t('project.links')} light>
+          <ul className="flex flex-wrap gap-3">
+            {links.map((key) => (
+              <li key={key}>
+                <a
+                  className="btn btn-secondary"
+                  href={contenu.liens[key]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t(`project.link.${key}`)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+    </article>
+  );
+}
