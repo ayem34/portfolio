@@ -1,8 +1,9 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from './components/Layout';
+import { restoreLanguage } from './i18n';
 import { useSite } from './lib/content';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -44,6 +45,9 @@ function PublicSite() {
 }
 
 export default function App() {
+  // Après le premier affichage (identique au HTML pré-généré, en français),
+  // on applique la langue choisie lors d'une visite précédente.
+  useEffect(restoreLanguage, []);
   return (
     <Routes>
       <Route
