@@ -39,6 +39,8 @@ services:
       EMAIL_BACKEND: ${EMAIL_BACKEND:-smtp}
       SMTP_HOST: ${SMTP_HOST:-mailpit}
       SMTP_PORT: ${SMTP_PORT:-1025}
+      DEPLOY_HOOK_URL: ${DEPLOY_HOOK_URL:-http://site:8080/__deploy}
+      SITE_URL: ${SITE_URL:-http://localhost:8080}
     volumes:
       - ./backend:/app
       - ./uploads:/app/uploads
@@ -66,6 +68,26 @@ services:
       - "5173:5173"
     depends_on:
       - api
+
+  # Site généré (pages statiques), comme en ligne : il reste affiché si l'API est arrêtée.
+  # Ce service remplace aussi le deploy hook Vercel : « Mettre le site à jour » dans
+  # l'admin lui demande de relancer la commande « npm run build ».
+  site:
+    build: ./frontend
+    command: ["npm", "run", "site"]
+    environment:
+      API_URL: http://api:8000
+      SITE_URL: ${SITE_URL:-http://localhost:8080}
+      UPLOADS_DIR: /uploads
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - ./uploads:/uploads:ro
+    ports:
+      - "8080:8080"
+    depends_on:
+      api:
+        condition: service_healthy
 
 volumes:
   db-data:

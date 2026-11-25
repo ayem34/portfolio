@@ -17,7 +17,8 @@ Pour changer ces valeurs, copier `.env.example` en `.env` avant le premier lance
 
 | Adresse | Contenu |
 | --- | --- |
-| http://localhost:5173 | Site (serveur de développement) |
+| http://localhost:5173 | Site et admin (`/admin`) en développement : contenu publié lu en direct |
+| http://localhost:8080 | Site généré (pages statiques), mis à jour par « Mettre le site à jour » |
 | http://localhost:8000/docs | Documentation de l'API |
 | http://localhost:8025 | Mailpit : e-mails envoyés en local |
 
