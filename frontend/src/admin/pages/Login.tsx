@@ -6,9 +6,10 @@ import { z } from 'zod';
 
 import { LanguageSwitch } from '../../components/LanguageSwitch';
 import { api } from '../../lib/api';
+import { useErrorMessage } from '../../lib/errors';
 import type { AdminSession } from '../../lib/types';
 import { TextField } from '../components/form';
-import { SESSION_KEY, useErrorMessage } from '../hooks';
+import { SESSION_KEY } from '../hooks';
 
 const schema = z.object({
   email: z.string().email(),
