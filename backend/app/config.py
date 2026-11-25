@@ -3,6 +3,7 @@
 from functools import lru_cache
 from typing import Literal
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -11,6 +12,15 @@ class Settings(BaseSettings):
 
     environment: Literal["development", "production", "test"] = "development"
     database_url: str = "postgresql+psycopg://portfolio:portfolio@localhost:5432/portfolio"
+
+    @field_validator("database_url")
+    @classmethod
+    def use_psycopg_driver(cls, value: str) -> str:
+        """Accepte la chaîne de connexion telle que la donne Supabase (postgresql://…)."""
+        for prefix in ("postgresql://", "postgres://"):
+            if value.startswith(prefix):
+                return "postgresql+psycopg://" + value.removeprefix(prefix)
+        return value
 
     # Sécurité
     secret_key: str = "change-me-in-production"

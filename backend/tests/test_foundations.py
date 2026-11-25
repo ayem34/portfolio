@@ -2,7 +2,7 @@ from alembic.autogenerate import compare_metadata
 from alembic.migration import MigrationContext
 from sqlalchemy import inspect, select
 
-from app.config import get_settings
+from app.config import Settings, get_settings
 from app.database import Base, engine
 from app.models import Admin, Metier, Profil
 from app.scripts.bootstrap import bootstrap
@@ -63,3 +63,10 @@ def test_bootstrap_is_idempotent(db):
     bootstrap(db, get_settings())
     assert len(db.scalars(select(Admin)).all()) == 1
     assert len(db.scalars(select(Metier)).all()) == 3
+
+
+def test_database_url_from_supabase_is_accepted_as_is():
+    expected = "postgresql+psycopg://u:p@hote:5432/postgres"
+    assert Settings(database_url="postgresql://u:p@hote:5432/postgres").database_url == expected
+    assert Settings(database_url="postgres://u:p@hote:5432/postgres").database_url == expected
+    assert Settings(database_url=expected).database_url == expected
