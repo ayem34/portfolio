@@ -2,15 +2,33 @@
 
 from datetime import date, datetime
 
-from app.enums import AccesCode, Categorie, Etat, Niveau, TypeMedia, TypeParcours
+from app.enums import (
+    AccesCode,
+    Categorie,
+    CouleurMetier,
+    Etat,
+    FigureMetier,
+    Niveau,
+    TypeMedia,
+    TypeParcours,
+)
 from app.schemas.common import LocalizedText, Schema
-from app.schemas.content import ProfilSchema
+from app.schemas.content import OffreMetier, ProfilSchema
 from app.schemas.projet import ContenuProjet, DemoConfig, EtapeOut
 
 
 class PublicMetier(Schema):
     slug: str
     nom: LocalizedText
+
+
+class PublicMetierDetail(PublicMetier):
+    """Métier complet, fourni une seule fois dans site.json (les cartes gardent slug + nom)."""
+
+    description: LocalizedText
+    offre: OffreMetier
+    figure: FigureMetier
+    couleur: CouleurMetier
 
 
 class PublicProjetMetier(PublicMetier):
@@ -22,6 +40,8 @@ class PublicTechnologie(Schema):
     nom: str
     domaine: LocalizedText
     niveau: Niveau
+    source: LocalizedText = LocalizedText()
+    progression: int = 1
     # Slugs des projets publiés qui utilisent cette compétence (« projets qui prouvent »).
     projets: list[str] = []
 
@@ -82,7 +102,7 @@ class PublicParcours(Schema):
 
 class PublicSite(Schema):
     profil: ProfilSchema
-    metiers: list[PublicMetier]
+    metiers: list[PublicMetierDetail]
     projets: list[PublicProjetCard]
     technologies: list[PublicTechnologie]
     parcours: list[PublicParcours]

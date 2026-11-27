@@ -63,3 +63,30 @@ class StatutDemande(StrEnum):
     ACCEPTEE = "acceptee"
     REFUSEE = "refusee"
     REVOQUEE = "revoquee"
+
+
+class ObjetMessage(StrEnum):
+    """Objet choisi dans le formulaire de contact (recruteur ou client)."""
+
+    PROJET = "projet"
+    STAGE = "stage"
+    EMPLOI = "emploi"
+    AUTRE = "autre"
+
+
+class FigureMetier(StrEnum):
+    """Petite figure animée qui illustre un métier sur le site."""
+
+    GRAPHIQUE = "graphique"
+    PIPELINE = "pipeline"
+    APPLICATION = "application"
+
+
+class CouleurMetier(StrEnum):
+    """Couleur associée à un métier, reprise partout sur le site (cartes, radar, matrice)."""
+
+    CORAIL = "corail"
+    BLEU = "bleu"
+    VERT = "vert"
+    AMBRE = "ambre"
+    VIOLET = "violet"

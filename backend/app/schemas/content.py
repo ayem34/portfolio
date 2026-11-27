@@ -5,20 +5,52 @@ from typing import Literal
 
 from pydantic import EmailStr, Field, field_validator, model_validator
 
-from app.enums import Niveau, StatutDemande, TypeDemo, TypeMedia, TypeParcours
+from app.enums import (
+    CouleurMetier,
+    FigureMetier,
+    Niveau,
+    ObjetMessage,
+    StatutDemande,
+    TypeDemo,
+    TypeMedia,
+    TypeParcours,
+)
 from app.schemas.common import LocalizedText, Schema, Url
 
 
-class MetierOut(Schema):
+class OffreMetier(Schema):
+    """Ce que le métier apporte à un client (page À propos, « Pour vos projets »)."""
+
+    titre: LocalizedText = LocalizedText()
+    texte: LocalizedText = LocalizedText()
+
+
+class MetierIn(Schema):
+    nom: LocalizedText
+    description: LocalizedText = LocalizedText()
+    offre: OffreMetier = OffreMetier()
+    figure: FigureMetier = FigureMetier.APPLICATION
+    couleur: CouleurMetier = CouleurMetier.CORAIL
+
+    @model_validator(mode="after")
+    def name_required(self) -> "MetierIn":
+        if not self.nom.fr:
+            raise ValueError("nom_fr_requis")
+        return self
+
+
+class MetierOut(MetierIn):
     id: int
     slug: str
-    nom: LocalizedText
 
 
 class TechnologieIn(Schema):
     nom: str = Field(min_length=1, max_length=120)
     domaine: LocalizedText
     niveau: Niveau = Niveau.NOTIONS
+    # Utiles tant qu'aucun projet publié ne prouve la compétence (« en cours d'apprentissage »).
+    source: LocalizedText = LocalizedText()
+    progression: int = Field(default=1, ge=1, le=3)
 
 
 class TechnologieOut(TechnologieIn):
@@ -52,6 +84,11 @@ class Presentation(Schema):
     profil: LocalizedText = LocalizedText()
     orientation: LocalizedText = LocalizedText()
     methode: LocalizedText = LocalizedText()
+    # Grand titre de la page À propos ; les mots entre **…** sont mis en valeur.
+    slogan: LocalizedText = LocalizedText()
+    # Ex. « à partir de février 2027 » ; vide = pas de badge « Disponible ».
+    disponibilite: LocalizedText = LocalizedText()
+    localisation: LocalizedText = LocalizedText()
 
 
 class LiensProfil(Schema):
@@ -86,7 +123,9 @@ class MediaOut(Schema):
 
 
 class ContactIn(Schema):
+    objet: ObjetMessage = ObjetMessage.AUTRE
     nom: str = Field(min_length=1, max_length=120)
+    entreprise: str = Field(default="", max_length=160)
     email: EmailStr
     contenu: str = Field(min_length=10, max_length=5000)
     # Champ piège : invisible pour un humain, rempli par les robots.
@@ -95,7 +134,9 @@ class ContactIn(Schema):
 
 class MessageOut(Schema):
     id: int
+    objet: ObjetMessage
     nom: str
+    entreprise: str
     email: str
     contenu: str
     traite: bool

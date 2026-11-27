@@ -15,7 +15,7 @@ from app.schemas.content import ProfilSchema
 from app.schemas.public import (
     PublicDemo,
     PublicMedia,
-    PublicMetier,
+    PublicMetierDetail,
     PublicParcours,
     PublicProjetCard,
     PublicProjetDetail,
@@ -72,6 +72,8 @@ def _technology(technologie: Technologie, published_only: bool = True) -> Public
         nom=technologie.nom,
         domaine=technologie.domaine,
         niveau=technologie.niveau,
+        source=technologie.source,
+        progression=technologie.progression,
         projets=[p.slug for p in technologie.projets if not published_only or is_published(p)],
     )
 
@@ -130,7 +132,7 @@ def site(db: Session) -> PublicSite:
     return PublicSite(
         profil=ProfilSchema.model_validate(profil) if profil else ProfilSchema(),
         metiers=[
-            PublicMetier.model_validate(metier)
+            PublicMetierDetail.model_validate(metier)
             for metier in db.scalars(select(Metier).order_by(Metier.ordre))
         ],
         projets=[project_card(projet) for projet in published_projects(db)],

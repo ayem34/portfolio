@@ -29,9 +29,19 @@ class Liens(Schema):
     rapport: Url = ""
 
 
+class InfosProjet(Schema):
+    """Ligne d'infos clés sous les badges de la fiche (période, rôle, équipe, cadre)."""
+
+    periode: LocalizedText = LocalizedText()
+    role: LocalizedText = LocalizedText()
+    equipe: LocalizedText = LocalizedText()
+    cadre: LocalizedText = LocalizedText()
+
+
 class ContenuProjet(Schema):
     """Sections de la fiche projet (section 4.1 de la conception)."""
 
+    infos: InfosProjet = InfosProjet()
     contexte: LocalizedText = LocalizedText()
     objectifs: LocalizedText = LocalizedText()
     resultats: LocalizedText = LocalizedText()
