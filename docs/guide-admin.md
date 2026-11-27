@@ -14,8 +14,9 @@ Au premier lancement, trois projets « Exemple — … » sont présents en brou
 
 | Menu | À faire |
 | --- | --- |
-| **Profil** | Nom, titre, e-mail, LinkedIn, GitHub, CV (PDF). « Positionnement » = les deux phrases de l'accueil ; « Profil », « Orientation » et « Comment je travaille » alimentent la page À propos |
-| **Compétences** | Créer chaque compétence avec son domaine (ex. « Big Data ») et son niveau (Notions / Pratique / Bonne maîtrise). Les flèches ↑ ↓ règlent l'ordre d'affichage |
+| **Profil** | Nom, titre, e-mail, LinkedIn, GitHub, CV (PDF). « Positionnement » = les deux phrases de l'accueil ; « Profil », « Orientation » et « Comment je travaille » alimentent les trois cartes de la page À propos. Rubrique **Disponibilité et lieu** : le grand titre de la page À propos (les mots entre `**…**` sont mis en valeur), la date de disponibilité (vide = pas de badge « Disponible ») et le lieu |
+| **Métiers** | Pour chacun des trois métiers : la phrase « ce que je fais » (carte de l'accueil), l'offre pour un client (titre + texte, page À propos), la figure animée et la couleur. Un aperçu montre la carte en direct. Le nombre de projets et les compétences clés se calculent tout seuls |
+| **Compétences** | Créer chaque compétence avec son domaine (ex. « Big Data ») et son niveau (Notions / Pratique / Bonne maîtrise). Les flèches ↑ ↓ règlent l'ordre d'affichage. Tant qu'aucun projet publié ne l'utilise, elle s'affiche dans « Ce que j'apprends en ce moment » : indiquez alors **où vous l'apprenez** et **l'étape atteinte** (cours suivi, exercices, projet prévu) |
 | **Parcours** | Formations, stage, certifications, hackathons, challenges, avec un justificatif (PDF ou image) si vous en avez un |
 
 Les textes longs acceptent le Markdown : `**gras**`, listes avec `- `, titres avec `## `, liens `[texte](https://…)`.
@@ -24,12 +25,14 @@ Les textes longs acceptent le Markdown : `**gras**`, listes avec `- `, titres av
 
 1. **Projets → Nouveau projet.**
 2. Onglet **Général** :
+   - **Infos clés** : période, rôle, équipe, cadre. Affichées en une ligne sous les badges, en haut de la fiche ; un champ vide est masqué.
    - **Titre** (le français est obligatoire). L'adresse de la fiche (« slug ») se remplit toute seule ; vous pouvez la raccourcir. Évitez de la changer après publication : les liens déjà partagés ne fonctionneraient plus.
    - **Résumé d'une phrase** : affiché sur la carte du projet.
    - **Catégorie**, et les deux badges **État** (Terminé / En cours / Prototype) et **Code** (Public / Privé / Confidentiel). Le troisième badge, **Démo**, se calcule tout seul d'après les démos ajoutées.
    - **Projet phare** : affiché sur l'accueil (3 au maximum y sont montrés).
    - **Métiers concernés** : cochez les métiers et réglez la pertinence. Quand un recruteur choisit « Data Engineer », les projets à forte pertinence pour ce métier passent en tête.
    - **Technologies** : cochez les compétences utilisées. C'est ce qui fait apparaître « utilisée dans 2 projets » sur la page Compétences.
+   - Les technologies cochées et les liens (GitHub, démo…) s'affichent directement dans l'en-tête de la fiche.
 3. **Enregistrer.** Les onglets Galerie, Démos et Historique deviennent disponibles.
 4. Onglet **Contenu de la fiche** : contexte, objectifs, résultats, résultats chiffrés (ex. valeur `0,87`, libellé `Score F1`), « Comment je travaille » (5 rubriques), difficultés, apprentissages, liens. Une rubrique laissée vide n'est pas affichée. **Enregistrer.**
 5. Onglet **Galerie** : importez les captures et graphiques, écrivez une légende pour chacun, ordonnez avec ↑ ↓. La première image sert d'illustration à la carte du projet et aux aperçus de partage.
