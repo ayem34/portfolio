@@ -38,15 +38,15 @@ function ProjectContent({ published }: { published: PublicProjetDetail }) {
 
   return (
     <>
-      <div className="container-page pt-6">
-        <Link
-          className="text-muted hover:text-accent text-sm underline"
-          to={withMetier('/projets', metier)}
-        >
-          {t('project.backToProjects')}
-        </Link>
-      </div>
       <ProjectView
+        backLink={
+          <Link
+            className="text-muted hover:text-accent text-sm font-semibold"
+            to={withMetier('/projets', metier)}
+          >
+            {t('project.backToProjects')}
+          </Link>
+        }
         key={unlocked ? 'unlocked' : 'published'}
         projet={projet}
         onDemoLaunch={onDemoLaunch}

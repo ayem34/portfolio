@@ -106,7 +106,13 @@ def send_message(
     mailer: Mailer = Depends(get_mailer),
 ) -> dict[str, bool]:
     if not data.site_web:
-        message = Message(nom=data.nom, email=data.email, contenu=data.contenu)
+        message = Message(
+            objet=data.objet,
+            nom=data.nom,
+            entreprise=data.entreprise,
+            email=data.email,
+            contenu=data.contenu,
+        )
         db.add(message)
         db.commit()
         db.refresh(message)

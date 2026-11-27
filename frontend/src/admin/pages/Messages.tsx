@@ -31,7 +31,13 @@ export default function Messages() {
               <li key={message.id} className="card space-y-3 p-5">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <p className="font-semibold">
-                    {message.nom}{' '}
+                    <Badge tone={message.objet === 'projet' ? 'accent' : 'info'}>
+                      {t(`enums.objet_message.${message.objet}`)}
+                    </Badge>{' '}
+                    {message.nom}
+                    {message.entreprise && (
+                      <span className="text-muted font-normal"> · {message.entreprise}</span>
+                    )}{' '}
                     <a
                       className="text-accent font-normal underline"
                       href={`mailto:${message.email}`}

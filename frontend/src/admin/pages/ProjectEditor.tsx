@@ -12,6 +12,7 @@ import {
   ACCES_CODES,
   CATEGORIES,
   ETATS,
+  INFO_KEYS,
   LIEN_KEYS,
   METHODE_KEYS,
   type Metier,
@@ -132,6 +133,21 @@ function ProjectForm({ projet, tab, onSaved }: ProjectFormProps) {
             multiline
             rows={2}
           />
+        </FormSection>
+
+        <FormSection title={t('admin.project.keyInfos')}>
+          <p className="text-muted text-sm">{t('admin.project.keyInfosHint')}</p>
+          <div className="grid gap-4 xl:grid-cols-2">
+            {INFO_KEYS.map((key) => (
+              <BilingualField
+                key={key}
+                label={t(`project.infos.${key}`)}
+                hint={t(`admin.project.infoExamples.${key}`)}
+                name={`contenu.infos.${key}`}
+                register={register}
+              />
+            ))}
+          </div>
         </FormSection>
 
         <FormSection title={t('admin.project.classification')}>

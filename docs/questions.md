@@ -69,3 +69,11 @@ Les commits sont signés (clé SSH) dans l'environnement de l'agent. À vérifie
 ## Q12 — Fichiers téléchargeables (`.jar` de NepalusVote)
 
 L'import de fichiers est limité aux images, vidéos, PDF, notebooks HTML et sous-titres. **Choix :** un `.jar` se publie comme démo « lien externe » pointant vers une release GitHub, ce qui évite d'héberger un exécutable.
+
+## Q13 — Textes de la méthode en 4 étapes (page À propos)
+
+La règle « aucun texte écrit en dur » demande que le contenu vienne de la base. Les 4 étapes « Comprendre → Concevoir → Construire → Livrer » et leur « Vous recevez » décrivent la façon de travailler du site, pas un contenu qui change souvent. **Choix :** elles sont dans les fichiers de traduction (`about.method.steps`), en FR et EN. Si Ayem veut les modifier sans toucher au code, on pourra les déplacer dans le profil (même principe que « Comment je travaille »).
+
+## Q14 — Chiffres clés et couleurs des domaines
+
+**Choix :** les chiffres affichés (projets publiés, compétences prouvées, challenges et hackathons, métiers) sont toujours **calculés** à partir du contenu publié, jamais saisis : ils ne peuvent pas contredire la page Projets. Sur la page Compétences, chaque domaine reçoit automatiquement une couleur parmi huit teintes, dans l'ordre d'apparition.

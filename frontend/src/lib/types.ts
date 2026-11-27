@@ -16,6 +16,9 @@ export type TypeDemo =
 export type TypeParcours = 'formation' | 'stage' | 'certification' | 'hackathon' | 'challenge';
 export type StatutDemande = 'en_attente' | 'acceptee' | 'refusee' | 'revoquee';
 export type Cadre = 'navigateur' | 'telephone' | 'aucun';
+export type ObjetMessage = 'projet' | 'stage' | 'emploi' | 'autre';
+export type FigureMetier = 'graphique' | 'pipeline' | 'application';
+export type CouleurMetier = 'corail' | 'bleu' | 'vert' | 'ambre' | 'violet';
 
 export const CATEGORIES: Categorie[] = ['personnel', 'academique', 'collaboratif'];
 export const ETATS: Etat[] = ['termine', 'en_cours', 'prototype'];
@@ -37,6 +40,9 @@ export const TYPES_PARCOURS: TypeParcours[] = [
   'challenge',
 ];
 export const CADRES: Cadre[] = ['navigateur', 'telephone', 'aucun'];
+export const OBJETS_MESSAGE: ObjetMessage[] = ['projet', 'stage', 'emploi', 'autre'];
+export const FIGURES_METIER: FigureMetier[] = ['graphique', 'pipeline', 'application'];
+export const COULEURS_METIER: CouleurMetier[] = ['corail', 'bleu', 'vert', 'ambre', 'violet'];
 
 // --- Projet ---
 
@@ -57,7 +63,11 @@ export type MethodeKey = (typeof METHODE_KEYS)[number];
 export const LIEN_KEYS = ['github', 'demo', 'documentation', 'rapport'] as const;
 export type LienKey = (typeof LIEN_KEYS)[number];
 
+export const INFO_KEYS = ['periode', 'role', 'equipe', 'cadre'] as const;
+export type InfoKey = (typeof INFO_KEYS)[number];
+
 export interface ContenuProjet {
+  infos: Record<InfoKey, LocalizedText>;
   contexte: LocalizedText;
   objectifs: LocalizedText;
   resultats: LocalizedText;
@@ -150,16 +160,31 @@ export interface Demo extends DemoInput {
 
 // --- Autres contenus ---
 
-export interface Metier {
+export interface OffreMetier {
+  titre: LocalizedText;
+  texte: LocalizedText;
+}
+
+export interface MetierInput {
+  nom: LocalizedText;
+  description: LocalizedText;
+  offre: OffreMetier;
+  figure: FigureMetier;
+  couleur: CouleurMetier;
+}
+
+export interface Metier extends MetierInput {
   id: number;
   slug: string;
-  nom: LocalizedText;
 }
 
 export interface TechnologieInput {
   nom: string;
   domaine: LocalizedText;
   niveau: Niveau;
+  source: LocalizedText;
+  /** 1 = cours suivi, 2 = exercices faits, 3 = projet prévu. */
+  progression: number;
 }
 
 export interface Technologie extends TechnologieInput {
@@ -182,7 +207,15 @@ export interface Parcours extends ParcoursInput {
   id: number;
 }
 
-export const PRESENTATION_KEYS = ['accroche', 'profil', 'orientation', 'methode'] as const;
+export const PRESENTATION_KEYS = [
+  'accroche',
+  'profil',
+  'orientation',
+  'methode',
+  'slogan',
+  'disponibilite',
+  'localisation',
+] as const;
 export type PresentationKey = (typeof PRESENTATION_KEYS)[number];
 
 export interface Profil {
@@ -208,7 +241,9 @@ export interface Media {
 
 export interface Message {
   id: number;
+  objet: ObjetMessage;
   nom: string;
+  entreprise: string;
   email: string;
   contenu: string;
   traite: boolean;
@@ -274,11 +309,20 @@ export interface PublicMetier {
   nom: LocalizedText;
 }
 
+export interface PublicMetierDetail extends PublicMetier {
+  description: LocalizedText;
+  offre: OffreMetier;
+  figure: FigureMetier;
+  couleur: CouleurMetier;
+}
+
 export interface PublicTechnologie {
   id: number;
   nom: string;
   domaine: LocalizedText;
   niveau: Niveau;
+  source: LocalizedText;
+  progression: number;
   projets: string[];
 }
 
@@ -323,7 +367,7 @@ export interface PublicProjetDetail extends PublicProjetCard {
 
 export interface PublicSite {
   profil: Profil;
-  metiers: PublicMetier[];
+  metiers: PublicMetierDetail[];
   projets: PublicProjetCard[];
   technologies: PublicTechnologie[];
   parcours: Parcours[];

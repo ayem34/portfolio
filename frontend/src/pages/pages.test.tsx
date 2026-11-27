@@ -129,16 +129,20 @@ describe('fiche projet', () => {
       'Contexte et problématique',
       'Objectifs et résultats',
       'Comment je travaille',
-      'Technologies',
       'Galerie',
-      'Liens',
     ]) {
       expect(screen.getByRole('heading', { level: 2, name: title })).toBeInTheDocument();
     }
     expect(screen.getByText('0,87')).toBeInTheDocument();
+    // En-tête : technologies et liens directement sous les badges (variante A).
     expect(screen.getByRole('link', { name: /React/ })).toHaveAttribute(
       'href',
       '/competences#competence-3',
+    );
+    const header = within(screen.getAllByRole('banner')[1]!);
+    expect(header.getByRole('link', { name: /GitHub/ })).toHaveAttribute(
+      'href',
+      'https://github.com/exemple/projet',
     );
     await waitFor(() =>
       expect(jsonCalls('/api/public/consultations')).toEqual([
@@ -212,31 +216,49 @@ describe('fiche projet', () => {
 });
 
 describe('autres pages', () => {
-  test('À propos : sections remplies seulement, frise du parcours', () => {
+  test('À propos : slogan, chiffres calculés, sections remplies seulement, offres, parcours', async () => {
     renderSite('/a-propos');
-    expect(screen.getByRole('heading', { level: 2, name: 'Profil' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Slogan fictif.');
+    // Chiffres clés calculés à partir du contenu publié.
+    const published = screen.getByText('projets publiés').closest('div')!;
+    expect(within(published).getByText('3')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 3, name: 'Profil' })).toBeInTheDocument();
     expect(
-      screen.queryByRole('heading', { level: 2, name: 'Orientation' }),
+      screen.queryByRole('heading', { level: 3, name: 'Orientation' }),
     ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 3, name: 'Offre data-engineer' }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Disponible · dès maintenant/)).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { level: 3, name: 'Formation fictive' }),
     ).toBeInTheDocument();
   });
 
-  test('Compétences : niveau et projets qui prouvent', () => {
+  test('Compétences : matrice compétences × projets et compétences en cours', async () => {
     renderSite('/competences');
-    const spark = screen.getByRole('heading', { level: 3, name: 'Spark' }).closest('li')!;
+    const spark = screen.getByRole('row', { name: /Spark/ });
     expect(within(spark).getByText('Pratique')).toBeInTheDocument();
-    expect(within(spark).getByText('Utilisée dans 1 projet :')).toBeInTheDocument();
-    expect(within(spark).getByRole('link', { name: 'Projet pipeline' })).toHaveAttribute(
+    expect(within(spark).getAllByRole('img', { name: 'utilisée' })).toHaveLength(1);
+    expect(screen.getByRole('link', { name: 'Projet pipeline' })).toHaveAttribute(
       'href',
       '/projets/pipeline',
     );
+    // Filtrer par domaine réduit le tableau.
+    await userEvent.click(screen.getByRole('button', { name: 'Développement web' }));
+    expect(screen.queryByRole('row', { name: /Spark/ })).not.toBeInTheDocument();
+    expect(screen.getByRole('row', { name: /React/ })).toBeInTheDocument();
+    // Hadoop n'a pas de projet : il est « en cours », avec sa source et son étape.
+    const hadoop = screen.getByRole('heading', { level: 3, name: 'Hadoop' }).closest('li')!;
+    expect(within(hadoop).getByText('Cours fictif')).toBeInTheDocument();
+    expect(within(hadoop).getByText(/Exercices/)).toHaveTextContent('✓');
   });
 
   test('Contact : coordonnées, validation et envoi du formulaire', async () => {
-    renderSite('/contact');
-    expect(screen.getByRole('link', { name: 'contact@example.com' })).toHaveAttribute(
+    renderSite('/contact?objet=stage');
+    const main = within(screen.getByRole('main'));
+    expect(main.getByLabelText('Objet')).toHaveValue('stage');
+    expect(main.getByRole('link', { name: 'contact@example.com' })).toHaveAttribute(
       'href',
       'mailto:contact@example.com',
     );
@@ -249,11 +271,16 @@ describe('autres pages', () => {
     expect(jsonCalls('/api/public/messages')).toEqual([]);
 
     await userEvent.type(screen.getByLabelText('Nom'), 'Awa');
+    await userEvent.type(screen.getByLabelText(/Entreprise/), 'Agri CI');
     await userEvent.type(screen.getByLabelText('E-mail'), 'awa@example.com');
     await userEvent.type(screen.getByLabelText('Message'), 'Bonjour, une offre de stage.');
     fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({ recu: true }), { status: 201 }));
     await userEvent.click(screen.getByRole('button', { name: 'Envoyer' }));
     expect(await screen.findByText(/Message envoyé/)).toBeInTheDocument();
+    expect(jsonCalls('/api/public/messages')[0]).toMatchObject({
+      objet: 'stage',
+      entreprise: 'Agri CI',
+    });
   });
 
   test('bouton de langue : le site passe en anglais, avec repli sur le français', async () => {

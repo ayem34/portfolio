@@ -1,7 +1,12 @@
 /** Contenu fictif pour les tests (aucune donnée réelle). */
 
 import { EMPTY_CONTENT } from '../admin/project';
-import type { PublicProjetCard, PublicProjetDetail, PublicSite } from '../lib/types';
+import type {
+  PublicMetierDetail,
+  PublicProjetCard,
+  PublicProjetDetail,
+  PublicSite,
+} from '../lib/types';
 
 const text = (fr: string, en = '') => ({ fr, en });
 
@@ -30,6 +35,18 @@ const fullStack = {
   slug: 'full-stack',
   nom: text('Développeuse Full Stack', 'Full Stack Developer'),
 };
+const metierDetail = (
+  metier: { slug: string; nom: { fr: string; en: string } },
+  figure: PublicMetierDetail['figure'],
+  couleur: PublicMetierDetail['couleur'],
+): PublicMetierDetail => ({
+  ...metier,
+  description: text(`Description fictive ${metier.slug}.`),
+  offre: { titre: text(`Offre ${metier.slug}`), texte: text('Texte fictif.') },
+  figure,
+  couleur,
+});
+const learning = { source: text(''), progression: 1 };
 
 export const SITE: PublicSite = {
   profil: {
@@ -40,6 +57,9 @@ export const SITE: PublicSite = {
       profil: text('Profil fictif.'),
       orientation: text(''),
       methode: text('Méthode fictive.'),
+      slogan: text('Slogan **fictif**.'),
+      disponibilite: text('dès maintenant (exemple)'),
+      localisation: text('Ville fictive'),
     },
     email: 'contact@example.com',
     liens: {
@@ -48,7 +68,11 @@ export const SITE: PublicSite = {
     },
     cv_url: '/uploads/cv.pdf',
   },
-  metiers: [analyst, engineer, fullStack],
+  metiers: [
+    metierDetail(analyst, 'graphique', 'corail'),
+    metierDetail(engineer, 'pipeline', 'bleu'),
+    metierDetail(fullStack, 'application', 'vert'),
+  ],
   projets: [
     card('tableau-de-bord', {
       est_phare: true,
@@ -83,6 +107,7 @@ export const SITE: PublicSite = {
       nom: 'Pandas',
       domaine: text('Analyse de données', 'Data analysis'),
       niveau: 'bonne_maitrise',
+      ...learning,
       projets: ['tableau-de-bord'],
     },
     {
@@ -90,6 +115,7 @@ export const SITE: PublicSite = {
       nom: 'Spark',
       domaine: text('Big Data', 'Big Data'),
       niveau: 'pratique',
+      ...learning,
       projets: ['pipeline'],
     },
     {
@@ -97,9 +123,18 @@ export const SITE: PublicSite = {
       nom: 'React',
       domaine: text('Développement web', 'Web development'),
       niveau: 'pratique',
+      ...learning,
       projets: ['application'],
     },
-    { id: 4, nom: 'Hadoop', domaine: text('Big Data', 'Big Data'), niveau: 'notions', projets: [] },
+    {
+      id: 4,
+      nom: 'Hadoop',
+      domaine: text('Big Data', 'Big Data'),
+      niveau: 'notions',
+      source: text('Cours fictif'),
+      progression: 2,
+      projets: [],
+    },
   ],
   parcours: [
     {

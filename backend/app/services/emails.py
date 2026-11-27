@@ -7,9 +7,19 @@ def _project_title(projet: Projet) -> str:
     return projet.titre.get("fr") or projet.slug
 
 
+OBJETS = {
+    "projet": "Un projet à réaliser",
+    "stage": "Proposition de stage",
+    "emploi": "Offre d'emploi",
+    "autre": "Autre",
+}
+
+
 def new_message(message: Message) -> tuple[str, str]:
-    subject = f"Portfolio — nouveau message de {message.nom}"
-    body = f"De : {message.nom} <{message.email}>\n\n{message.contenu}\n"
+    objet = OBJETS.get(message.objet, "Autre")
+    subject = f"Portfolio — {objet} — message de {message.nom}"
+    company = f" ({message.entreprise})" if message.entreprise else ""
+    body = f"Objet : {objet}\nDe : {message.nom}{company} <{message.email}>\n\n{message.contenu}\n"
     return subject, body
 
 

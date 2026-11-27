@@ -9,6 +9,7 @@ from app.models import Metier, Parcours, Profil, Technologie
 from app.routers.deps import apply_order, get_or_404, next_position
 from app.schemas.common import OrderIn
 from app.schemas.content import (
+    MetierIn,
     MetierOut,
     ParcoursIn,
     ParcoursOut,
@@ -47,6 +48,21 @@ def list_metiers(db: Session = Depends(get_db)) -> list[Metier]:
     return list(db.scalars(select(Metier).order_by(Metier.ordre)))
 
 
+@router.put("/metiers/ordre", status_code=status.HTTP_204_NO_CONTENT)
+def reorder_metiers(data: OrderIn, db: Session = Depends(get_db)) -> None:
+    apply_order(list(db.scalars(select(Metier).order_by(Metier.ordre))), data.ids)
+    db.commit()
+
+
+@router.put("/metiers/{metier_id}", response_model=MetierOut)
+def update_metier(metier_id: int, data: MetierIn, db: Session = Depends(get_db)) -> Metier:
+    """Le slug ne change pas : il sert dans les liens envoyés aux recruteurs (?metier=...)."""
+    metier = get_or_404(db, Metier, metier_id)
+    for field, value in data.model_dump().items():
+        setattr(metier, field, value)
+    return _saved(db, metier)
+
+
 # --- Compétences ---
 
 
@@ -67,6 +83,8 @@ def _apply_technology(db: Session, technologie: Technologie, data: TechnologieIn
     technologie.nom = data.nom
     technologie.domaine = data.domaine.model_dump()
     technologie.niveau = data.niveau
+    technologie.source = data.source.model_dump()
+    technologie.progression = data.progression
 
 
 @router.get("/technologies", response_model=list[TechnologieOut])

@@ -2,6 +2,7 @@ import { EMPTY_TEXT } from '../lib/localized';
 import type { ContenuProjet, Projet, ProjetInput } from '../lib/types';
 
 export const EMPTY_CONTENT: ContenuProjet = {
+  infos: { periode: EMPTY_TEXT, role: EMPTY_TEXT, equipe: EMPTY_TEXT, cadre: EMPTY_TEXT },
   contexte: EMPTY_TEXT,
   objectifs: EMPTY_TEXT,
   resultats: EMPTY_TEXT,

@@ -26,8 +26,11 @@ from app.database import Base
 from app.enums import (
     AccesCode,
     Categorie,
+    CouleurMetier,
     Etat,
+    FigureMetier,
     Niveau,
+    ObjetMessage,
     StatutDemande,
     StatutPublication,
     TypeDemo,
@@ -134,6 +137,15 @@ class Metier(Base):
     slug: Mapped[str] = mapped_column(String(60), unique=True)
     nom: Mapped[JsonDict] = mapped_column(JSON)
     ordre: Mapped[int] = mapped_column(Integer, default=0)
+    # Ce que fait ce métier (vu par un recruteur) et ce qu'il apporte à un client.
+    description: Mapped[JsonDict] = mapped_column(JSON, default=dict)
+    offre: Mapped[JsonDict] = mapped_column(JSON, default=dict)
+    figure: Mapped[FigureMetier] = mapped_column(
+        enum_column(FigureMetier), default=FigureMetier.APPLICATION
+    )
+    couleur: Mapped[CouleurMetier] = mapped_column(
+        enum_column(CouleurMetier), default=CouleurMetier.CORAIL
+    )
 
 
 class ProjetMetier(Base):
@@ -159,6 +171,10 @@ class Technologie(Base):
     domaine: Mapped[JsonDict] = mapped_column(JSON, default=dict)
     niveau: Mapped[Niveau] = mapped_column(enum_column(Niveau), default=Niveau.NOTIONS)
     ordre: Mapped[int] = mapped_column(Integer, default=0)
+    # Pour une compétence en cours d'apprentissage : où elle s'apprend et où on en est
+    # (1 = cours suivi, 2 = exercices faits, 3 = projet prévu).
+    source: Mapped[JsonDict] = mapped_column(JSON, default=dict)
+    progression: Mapped[int] = mapped_column(Integer, default=1)
 
     projets: Mapped[list[Projet]] = relationship(
         secondary="projet_technologie", back_populates="technologies", order_by="Projet.ordre"
@@ -243,6 +259,10 @@ class Message(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     nom: Mapped[str] = mapped_column(String(255))
     email: Mapped[str] = mapped_column(String(255))
+    objet: Mapped[ObjetMessage] = mapped_column(
+        enum_column(ObjetMessage), default=ObjetMessage.AUTRE
+    )
+    entreprise: Mapped[str] = mapped_column(String(255), default="")
     contenu: Mapped[str] = mapped_column(Text)
     traite: Mapped[bool] = mapped_column(Boolean, default=False)
     date: Mapped[datetime] = created_at()

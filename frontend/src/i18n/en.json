@@ -86,6 +86,24 @@
       "navigateur": "Browser",
       "telephone": "Phone",
       "aucun": "No frame"
+    },
+    "objet_message": {
+      "projet": "A project to build",
+      "stage": "Internship offer",
+      "emploi": "Job offer",
+      "autre": "Other"
+    },
+    "figure_metier": {
+      "graphique": "Chart (bars and curve)",
+      "pipeline": "Data pipeline",
+      "application": "Application window"
+    },
+    "couleur_metier": {
+      "corail": "Coral",
+      "bleu": "Blue",
+      "vert": "Green",
+      "ambre": "Amber",
+      "violet": "Violet"
     }
   },
   "errors": {
@@ -168,12 +186,26 @@
       "documentation": "Documentation",
       "rapport": "Report"
     },
-    "backToProjects": "← All projects"
+    "backToProjects": "← All projects",
+    "infos": {
+      "periode": "Period",
+      "role": "Role",
+      "equipe": "Team",
+      "cadre": "Context"
+    }
   },
   "timeline": {
     "ongoing": "present",
     "proof": "Proof",
-    "viewProof": "View proof"
+    "viewProof": "View proof",
+    "filterLabel": "Filter the background",
+    "groups": {
+      "all": "All",
+      "formation": "Education",
+      "experience": "Experience",
+      "challenges": "Challenges and hackathons",
+      "certification": "Certifications"
+    }
   },
   "admin": {
     "title": "Administration",
@@ -187,7 +219,8 @@
       "media": "Media",
       "messages": "Messages",
       "accessRequests": "Access requests",
-      "publication": "Publishing"
+      "publication": "Publishing",
+      "metiers": "Roles"
     },
     "lastLogin": "Last sign-in: {{date}}",
     "viewSite": "View the site",
@@ -275,7 +308,15 @@
       "figuresHint": "Examples: \"0.87\" + \"F1 score\", \"2.4 M\" + \"rows processed\".",
       "figureValue": "Value",
       "figureLabel": "Label",
-      "addFigure": "Add a figure"
+      "addFigure": "Add a figure",
+      "keyInfos": "Key details",
+      "keyInfosHint": "Shown on one line under the badges at the top of the project page. Empty fields are hidden.",
+      "infoExamples": {
+        "periode": "E.g. “Oct 2025 – Jan 2026”",
+        "role": "E.g. “Design and development”",
+        "equipe": "E.g. “Team of 3” or “Solo”",
+        "cadre": "E.g. “Supervised project · Python course”"
+      }
     },
     "gallery": {
       "add": "Add images to the gallery",
@@ -364,7 +405,12 @@
       "newDomain": "New domain (type it below)",
       "domain": "Domain",
       "level": "Level",
-      "usedIn": "used in {{count}} project(s)"
+      "usedIn": "used in {{count}} project(s)",
+      "learningTitle": "If you are still learning it",
+      "learningHint": "As long as no published project uses this skill, it appears in “What I am learning right now”, with these two details.",
+      "source": "Where I learn it",
+      "progression": "Step reached",
+      "learningShort": "learning · {{step}}"
     },
     "timeline": {
       "description": "Education, internship, certifications, hackathons and challenges: a single timeline on the About page, sorted by date.",
@@ -394,14 +440,21 @@
         "accroche": "Positioning",
         "profil": "Profile",
         "orientation": "Direction",
-        "methode": "How I work"
+        "methode": "How I work",
+        "slogan": "About page headline",
+        "disponibilite": "Available from",
+        "localisation": "Location"
       },
       "sectionHints": {
         "accroche": "Two sentences, shown on the home page.",
         "profil": "About page: from software engineering to data.",
         "orientation": "About page: what you are looking for.",
-        "methode": "About page: the way you work."
-      }
+        "methode": "About page: the way you work.",
+        "slogan": "E.g. “From software engineering to **Data Science.**”: words between ** ** are highlighted.",
+        "disponibilite": "E.g. “February 2027”. Leave empty to hide the “Available” badge.",
+        "localisation": "E.g. “Yamoussoukro · open to remote work”."
+      },
+      "availability": "Availability and location"
     },
     "media": {
       "description": "Images, videos, PDFs (CV, statements), HTML notebooks and subtitles. File names are regenerated on import.",
@@ -452,6 +505,19 @@
       "button": "Update the site",
       "started": "Site update started.",
       "done": "Update started. In a minute or two, check the result at"
+    },
+    "metier": {
+      "description": "The three target roles. Their text, figure and colour appear on the home page, the About page, the Skills page and the project cards. The number of projects and the key skills are computed automatically.",
+      "name": "Role name",
+      "descriptionField": "What I do (as seen by a recruiter)",
+      "descriptionHint": "One sentence, shown on the role card on the home page.",
+      "offerTitle": "Offer for a client: title",
+      "offerHint": "Shown in “What I can build for you” (About page). Leave empty to show no offer.",
+      "offerText": "Offer for a client: text",
+      "figure": "Animated figure",
+      "colour": "Colour",
+      "preview": "Preview",
+      "computedHint": "Number of projects and key skills: computed from published projects."
     }
   },
   "site": {
@@ -471,7 +537,14 @@
   "home": {
     "cv": "CV",
     "featured": "Featured projects",
-    "allProjects": "View all projects"
+    "allProjects": "See all {{count}} projects",
+    "keySkills": "Key skills",
+    "seeMetierProjects": "See the {{metier}} projects",
+    "seeProjects": "See my projects",
+    "whatIDoEyebrow": "What I do",
+    "whatIDo": "Three roles, one common thread: data",
+    "featuredEyebrow": "Featured",
+    "fullTimeline": "Full background"
   },
   "projects": {
     "lead": "Every project can be viewed, browsed or tried: pick a role to bring the most relevant ones to the top.",
@@ -486,21 +559,80 @@
       "demo": "Demo type",
       "category": "Category",
       "reset": "Clear filters"
+    },
+    "sort": {
+      "label": "Sort by",
+      "ordre": "Recommended",
+      "recent": "Most recent"
     }
   },
   "about": {
     "profile": "Profile",
     "direction": "Direction",
-    "timeline": "Background"
+    "timeline": "Background",
+    "timelineEyebrow": "My background",
+    "timelineTitle": "Every step, with its proof",
+    "offers": {
+      "eyebrow": "For your projects",
+      "title": "What I can build for you",
+      "lead": "Company, association or project owner: I support you from the idea to the launch. Every piece of work can be seen as a demo in my projects.",
+      "seeWork": "See my work"
+    },
+    "method": {
+      "eyebrow": "My method",
+      "title": "How a project with me works",
+      "youGet": "You get",
+      "steps": [
+        {
+          "title": "Understand",
+          "text": "A conversation to pin down your needs, your users and your business rules.",
+          "deliverable": "A summary of the need, agreed together"
+        },
+        {
+          "title": "Design",
+          "text": "Mock-ups and an application plan, approved with you before any code is written.",
+          "deliverable": "Clickable mock-ups"
+        },
+        {
+          "title": "Build",
+          "text": "I deliver in stages: at each stage, a version you can test.",
+          "deliverable": "A demo at every stage"
+        },
+        {
+          "title": "Deliver",
+          "text": "Deployment, documentation and hand-over to your team.",
+          "deliverable": "The live application and its documentation"
+        }
+      ]
+    }
   },
   "skills": {
-    "lead": "Each skill links to the projects that prove it.",
+    "lead": "Each shape shows what I bring to a role. Everything is computed from my published projects: the more a skill is used there, the further the shape reaches.",
     "usedIn_one": "Used in {{count}} project:",
     "usedIn_other": "Used in {{count}} projects:",
-    "noProject": "No published project with this skill yet."
+    "noProject": "No published project with this skill yet.",
+    "title": "My skills map",
+    "radarHint": "Pick a role to isolate its shape.",
+    "radarCaption": "Number of projects per skill area and per role",
+    "domain": "Area",
+    "domainFilter": "Filter by area",
+    "allDomains": "All areas",
+    "matrixCaption": "Skills used in each project",
+    "skill": "Skill",
+    "projectCount": "Projects",
+    "usedInProject": "used",
+    "learning": "Learning",
+    "progressLabel": "Progress",
+    "steps": ["Course taken", "Exercises", "Project planned"],
+    "matrixEyebrow": "Overview",
+    "matrixTitle": "Which skill, in which project",
+    "matrixHint": "Hover a row or a column to follow a skill or a project. Click a project to open it.",
+    "learningEyebrow": "In progress",
+    "learningTitle": "What I am learning right now",
+    "learningHint": "No published project yet: I say so honestly, with the course I am following."
   },
   "contact": {
-    "lead": "A question, an internship or a first job to offer? Write to me.",
+    "lead": "Hiring, or have a project to build? I will be glad to reply.",
     "details": "Contact details",
     "downloadCv": "Download CV (PDF)",
     "formTitle": "Send a message",
@@ -513,7 +645,12 @@
     "send": "Send",
     "sending": "Sending…",
     "slowNotice": "The server can take up to a minute to wake up. Thank you for waiting.",
-    "sent": "Message sent. Thank you, I will reply soon."
+    "sent": "Message sent. Thank you, I will reply soon.",
+    "title": "Write to me",
+    "subject": "Subject",
+    "company": "Company",
+    "optional": "Optional",
+    "location": "Location"
   },
   "access": {
     "title": "Confidential project",
@@ -555,5 +692,27 @@
       "title": "Page not found",
       "description": "This page does not exist."
     }
+  },
+  "figure": {
+    "sources": "Sources",
+    "transform": "Transform",
+    "warehouse": "Warehouse"
+  },
+  "footer": {
+    "title": "A project, an assignment, a job?",
+    "lead": "Whether you are hiring or have an idea to build, write to me: I reply quickly.",
+    "project": "Talk about my project",
+    "job": "Offer a position"
+  },
+  "profile": {
+    "available": "Available"
+  },
+  "stats": {
+    "projects_one": "{{count}} project",
+    "projects_other": "{{count}} projects",
+    "skills": "proven skills",
+    "challenges": "challenges and hackathons",
+    "metiers": "target roles",
+    "publishedProjects": "published projects"
   }
 }

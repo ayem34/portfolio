@@ -26,13 +26,75 @@
   --color-warning: #ffc857;
   --color-danger: #ff8a8a;
   --color-info: #8ec5ff;
+  --color-faint: #a8968a;
+}
+
+/*
+ * Couleur d'un métier (choisie dans l'admin), reprise sur ses cartes, sa figure,
+ * le radar et la matrice des compétences. --m = trait, --m-2 = clair, --m-soft = fond.
+ */
+.metier-corail {
+  --m: #ff7a59;
+  --m-2: #ffb36b;
+  --m-soft: #3a241b;
+}
+.metier-bleu {
+  --m: #4f9df0;
+  --m-2: #8cc0ff;
+  --m-soft: #1c2a3d;
+}
+.metier-vert {
+  --m: #3fbf7f;
+  --m-2: #8fe0b0;
+  --m-soft: #173528;
+}
+.metier-ambre {
+  --m: #f0b43c;
+  --m-2: #ffd27a;
+  --m-soft: #3a2d14;
+}
+.metier-violet {
+  --m: #a98bff;
+  --m-2: #cbb8ff;
+  --m-soft: #2a2140;
+}
+.section-light .metier-corail,
+.section-light.metier-corail {
+  --m: #c2410c;
+  --m-2: #ff7a59;
+  --m-soft: #f6e4da;
+}
+.section-light .metier-bleu,
+.section-light.metier-bleu {
+  --m: #1d4f91;
+  --m-2: #4f9df0;
+  --m-soft: #dde9f8;
+}
+.section-light .metier-vert,
+.section-light.metier-vert {
+  --m: #0f6b42;
+  --m-2: #2f9e68;
+  --m-soft: #d8efe2;
+}
+.section-light .metier-ambre,
+.section-light.metier-ambre {
+  --m: #8a5a00;
+  --m-2: #d99a1e;
+  --m-soft: #f5ead3;
+}
+.section-light .metier-violet,
+.section-light.metier-violet {
+  --m: #5b3fc4;
+  --m-2: #8f74f0;
+  --m-soft: #e7e1fb;
 }
 
 .section-light {
-  --color-bg: #fff6ef;
+  /* Sable neutre (plus de reflet rosé) : les cartes blanches « flottent » dessus. */
+  --color-bg: #f4f1ec;
   --color-surface: #ffffff;
-  --color-surface-2: #ffe9dc;
-  --color-border: #e3cfc2;
+  --color-surface-2: #ece6dd;
+  --color-border: #e0d8cd;
   --color-fg: #1f1612;
   --color-muted: #5c4a40;
   --color-accent: #c2410c;
@@ -44,6 +106,7 @@
   --color-warning: #8a5a00;
   --color-danger: #b42318;
   --color-info: #1d4f91;
+  --color-faint: #7a6457;
   background-color: var(--color-bg);
   color: var(--color-fg);
 }
@@ -202,5 +265,233 @@
 @media (prefers-reduced-motion: reduce) {
   .tour-hotspot {
     animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations : jouées une fois, quand l'élément arrive à l'écran.      */
+/* Sans JavaScript (ou avant hydratation), tout reste visible.           */
+/* ------------------------------------------------------------------ */
+.js .reveal:not(.is-shown) {
+  opacity: 0;
+  transform: translateY(18px);
+  /* Filet de sécurité : si le script ne démarre jamais, le contenu apparaît quand même. */
+  animation: reveal-failsafe 0s 4s forwards;
+}
+@keyframes reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.js .reveal.is-shown {
+  animation: reveal-up 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+/* Figures des métiers : barres qui montent, courbe qui se trace, blocs qui apparaissent. */
+.fig-bar,
+.fig-pop {
+  transform-box: fill-box;
+}
+.fig-bar {
+  transform-origin: bottom;
+}
+.fig-pop {
+  transform-origin: center;
+}
+.fig-draw {
+  stroke-dasharray: 400;
+}
+.js .is-shown .fig-bar {
+  animation: fig-grow 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: var(--delay, 0s);
+}
+.js .is-shown .fig-pop {
+  animation: fig-pop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1.4) both;
+  animation-delay: var(--delay, 0s);
+}
+.js .is-shown .fig-in {
+  animation: reveal-up 0.6s ease-out backwards;
+  animation-delay: var(--delay, 0s);
+}
+.js .is-shown .fig-draw {
+  animation: fig-draw 1.4s 0.6s ease-out both;
+}
+.js .reveal:not(.is-shown) :is(.fig-bar, .fig-pop, .fig-in) {
+  opacity: 0;
+}
+.js .reveal:not(.is-shown) .fig-draw {
+  stroke-dashoffset: 400;
+}
+@keyframes fig-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes fig-pop {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+@keyframes fig-draw {
+  from {
+    stroke-dashoffset: 400;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Décor des zones sombres : lignes qui se tracent, halos qui dérivent lentement. */
+.flow-line {
+  stroke-dasharray: 2200;
+  animation: flow-draw 2.6s ease-out both;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes flow-draw {
+  from {
+    stroke-dashoffset: 2200;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.glow {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  /* Dégradé radial plutôt qu'un filtre flou : bien plus léger pour les petits téléphones. */
+  background: radial-gradient(closest-side, var(--glow-color), transparent);
+  animation: glow-drift 14s ease-in-out infinite alternate;
+}
+@keyframes glow-drift {
+  to {
+    transform: translate(40px, -30px) scale(1.15);
+  }
+}
+.dot-grid {
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--color-fg) 8%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+.text-gradient {
+  background: linear-gradient(90deg, var(--color-accent), #ffb36b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Monogramme : anneau qui fait un tour à l'arrivée. */
+.monogram-ring {
+  background: conic-gradient(
+    from 0deg,
+    var(--color-accent),
+    #ffb36b,
+    var(--color-border),
+    var(--color-accent)
+  );
+}
+.js .monogram-ring {
+  animation: ring-in 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes ring-in {
+  from {
+    transform: rotate(-180deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* Méthode : la ligne se remplit et chaque étape s'allume à son tour. */
+.method-fill {
+  transform-origin: left;
+}
+.js .is-shown .method-fill {
+  animation: method-fill 2.7s 0.4s linear both;
+}
+@keyframes method-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+.js .is-shown .method-node {
+  animation: method-light 0.5s ease-out both;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes method-light {
+  from {
+    border-color: var(--color-border);
+    color: var(--color-faint);
+    box-shadow: none;
+  }
+}
+
+/* Barres et pastilles des compétences */
+.js .is-shown .bar-fill {
+  animation: bar-fill 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: var(--delay, 0s);
+  transform-origin: left;
+}
+@keyframes bar-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+.js .is-shown .radar-shape {
+  animation: radar-grow 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: var(--delay, 0s);
+}
+.radar-shape {
+  transform-box: view-box;
+  transform-origin: center;
+  transition: opacity 0.3s;
+}
+@keyframes radar-grow {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal:not(.is-shown),
+  .js .reveal.is-shown,
+  .js .reveal:not(.is-shown) :is(.fig-bar, .fig-pop, .fig-in) {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .fig-draw,
+  .js .reveal:not(.is-shown) .fig-draw {
+    stroke-dashoffset: 0;
+  }
+  .flow-line,
+  .glow,
+  .monogram-ring,
+  .js
+    .is-shown
+    :is(
+      .fig-bar,
+      .fig-pop,
+      .fig-in,
+      .fig-draw,
+      .method-fill,
+      .method-node,
+      .bar-fill,
+      .radar-shape
+    ) {
+    animation: none;
+  }
+  .flow-dot {
+    display: none;
   }
 }

@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 
 from app.config import Settings, get_settings
 from app.database import SessionLocal
+from app.enums import CouleurMetier, FigureMetier
 from app.models import Admin, Metier, Profil
 from app.scripts.example_content import seed_example_content
 from app.security import hash_password
@@ -18,10 +19,67 @@ from app.services.storage import build_storage
 
 logger = logging.getLogger("bootstrap")
 
-METIERS = [
-    ("data-analyst", {"fr": "Data Analyst", "en": "Data Analyst"}),
-    ("data-engineer", {"fr": "Data Engineer", "en": "Data Engineer"}),
-    ("full-stack", {"fr": "Développeuse Full Stack", "en": "Full Stack Developer"}),
+
+def _text(fr: str, en: str) -> dict[str, str]:
+    return {"fr": fr, "en": en}
+
+
+# Les trois métiers visés, avec leur texte de départ (modifiable ensuite dans l'admin).
+METIERS: list[dict] = [
+    {
+        "slug": "data-analyst",
+        "nom": _text("Data Analyst", "Data Analyst"),
+        "figure": FigureMetier.GRAPHIQUE,
+        "couleur": CouleurMetier.CORAIL,
+        "description": _text(
+            "Nettoyer, explorer et modéliser des données pour en tirer des décisions chiffrées.",
+            "Cleaning, exploring and modelling data to back decisions with figures.",
+        ),
+        "offre": {
+            "titre": _text("Tableaux de bord et analyses", "Dashboards and analyses"),
+            "texte": _text(
+                "Vos données transformées en indicateurs clairs pour décider : ventes, "
+                "clients, activité.",
+                "Your data turned into clear indicators to decide: sales, customers, activity.",
+            ),
+        },
+    },
+    {
+        "slug": "data-engineer",
+        "nom": _text("Data Engineer", "Data Engineer"),
+        "figure": FigureMetier.PIPELINE,
+        "couleur": CouleurMetier.BLEU,
+        "description": _text(
+            "Collecter, transformer et stocker les données de façon fiable, du scraping "
+            "au pipeline.",
+            "Collecting, transforming and storing data reliably, from scraping to pipelines.",
+        ),
+        "offre": {
+            "titre": _text("Données et automatisation", "Data and automation"),
+            "texte": _text(
+                "Collecte, nettoyage et chargement automatique de vos données, prêtes pour "
+                "l'analyse.",
+                "Automatic collection, cleaning and loading of your data, ready for analysis.",
+            ),
+        },
+    },
+    {
+        "slug": "full-stack",
+        "nom": _text("Développeuse Full Stack", "Full Stack Developer"),
+        "figure": FigureMetier.APPLICATION,
+        "couleur": CouleurMetier.VERT,
+        "description": _text(
+            "Concevoir et livrer des applications complètes : API, interface, administration.",
+            "Designing and shipping complete applications: API, interface, administration.",
+        ),
+        "offre": {
+            "titre": _text("Application web sur mesure", "Custom web application"),
+            "texte": _text(
+                "Une application complète : interface, API, base de données et mise en ligne.",
+                "A complete application: interface, API, database and deployment.",
+            ),
+        },
+    },
 ]
 
 
@@ -42,10 +100,16 @@ def ensure_admin(db: Session, settings: Settings) -> bool:
 
 
 def ensure_metiers(db: Session) -> None:
-    existing = set(db.scalars(select(Metier.slug)))
-    for ordre, (slug, nom) in enumerate(METIERS):
-        if slug not in existing:
-            db.add(Metier(slug=slug, nom=nom, ordre=ordre))
+    """Crée les métiers manquants et complète ceux dont le texte n'a jamais été saisi."""
+    existing = {metier.slug: metier for metier in db.scalars(select(Metier))}
+    for ordre, defaults in enumerate(METIERS):
+        metier = existing.get(defaults["slug"])
+        if metier is None:
+            db.add(Metier(ordre=ordre, **defaults))
+        elif not metier.description:
+            # Métier créé avant la refonte : on ne remplit que ce qui est encore vide.
+            for field in ("description", "offre", "figure", "couleur"):
+                setattr(metier, field, defaults[field])
 
 
 def ensure_profil(db: Session) -> None:
