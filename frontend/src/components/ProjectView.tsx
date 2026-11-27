@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 import { useLocalized } from '../lib/localized';
 import {
+  INFO_KEYS,
+  type InfoKey,
   LIEN_KEYS,
   type LocalizedText,
   METHODE_KEYS,
@@ -11,8 +13,11 @@ import {
   type PublicMedia,
   type PublicProjetDetail,
 } from '../lib/types';
-import { Badge } from './Badge';
+import { metierClass } from '../lib/metierStyle';
+import { useSite } from '../lib/content';
 import { DemoPlayer } from './demo/DemoPlayer';
+import { HeroBackdrop } from './design/HeroBackdrop';
+import { Reveal } from './design/Reveal';
 import { Markdown } from './Markdown';
 import { Modal } from './Modal';
 import { PageSection } from './PageSection';
@@ -24,6 +29,51 @@ interface ProjectViewProps {
   onDemoLaunch?: (demo: PublicDemo) => void;
   /** Affiché à la place du contenu quand le projet est protégé (accès sur demande). */
   lockedContent?: ReactNode;
+  /** Lien de retour affiché en haut de l'en-tête (absent dans l'aperçu de l'admin). */
+  backLink?: ReactNode;
+}
+
+/** Petites icônes de la ligne d'infos clés (période, rôle, équipe, cadre). */
+const INFO_ICONS: Record<InfoKey, ReactNode> = {
+  periode: <path d="M3 5h18v16H3zM3 10h18M8 3v4M16 3v4" />,
+  role: <path d="M4 20h4L19 9l-4-4L4 16z" />,
+  equipe: (
+    <>
+      <circle cx="9" cy="8" r="3" />
+      <circle cx="17" cy="9" r="2.5" />
+      <path d="M3 20c0-3 3-5 6-5s6 2 6 5M15 15c3 0 6 1.5 6 4" />
+    </>
+  ),
+  cadre: <path d="M2 9l10-5 10 5-10 5zM6 11v5c3 2 9 2 12 0v-5" />,
+};
+
+function InfoLine({ infos }: { infos: Record<InfoKey, LocalizedText> | undefined }) {
+  const { t } = useTranslation();
+  const l = useLocalized();
+  const items = INFO_KEYS.filter((key) => infos && l(infos[key]));
+  if (!infos || items.length === 0) return null;
+  return (
+    <ul className="text-muted flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+      {items.map((key) => (
+        <li key={key} className="inline-flex items-center gap-2">
+          <svg
+            viewBox="0 0 24 24"
+            className="text-accent size-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            {INFO_ICONS[key]}
+          </svg>
+          <span className="sr-only">{t(`project.infos.${key}`)} :</span>
+          {l(infos[key])}
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 function Gallery({ medias }: { medias: PublicMedia[] }) {
@@ -75,9 +125,11 @@ function Gallery({ medias }: { medias: PublicMedia[] }) {
  * Fiche projet complète (section 4.1). Utilisée telle quelle par la page publique
  * et par l'aperçu de l'admin.
  */
-export function ProjectView({ projet, onDemoLaunch, lockedContent }: ProjectViewProps) {
+export function ProjectView({ projet, onDemoLaunch, lockedContent, backLink }: ProjectViewProps) {
   const { t } = useTranslation();
   const l = useLocalized();
+  const { data: site } = useSite();
+  const colours = new Map(site?.metiers.map((item) => [item.slug, item.couleur]));
   const mainDemo = projet.demos[0];
   const [activeDemoId, setActiveDemoId] = useState(mainDemo?.id ?? 0);
 
@@ -95,26 +147,66 @@ export function ProjectView({ projet, onDemoLaunch, lockedContent }: ProjectView
 
   return (
     <article>
-      <header className="py-12 sm:py-16">
-        <div className="container-page space-y-5">
-          <p className="eyebrow">{t(`enums.categorie.${projet.categorie}`)}</p>
-          <h1 className="text-4xl font-bold sm:text-5xl">{l(projet.titre)}</h1>
-          <p className="text-muted max-w-3xl text-lg sm:text-xl">{l(projet.resume)}</p>
-          {projet.metiers.length > 0 && (
-            <ul className="flex flex-wrap gap-2" aria-label={t('project.metiers')}>
+      <header className="border-border relative overflow-hidden border-b">
+        <HeroBackdrop id="fiche" />
+        <div className="container-page relative space-y-5 pt-8 pb-14 sm:pb-20">
+          {backLink}
+          <Reveal as="p" className="eyebrow pt-4">
+            {t(`enums.categorie.${projet.categorie}`)}
+          </Reveal>
+          <Reveal as="h1" delay={0.08} className="max-w-4xl text-4xl font-bold sm:text-6xl">
+            {l(projet.titre)}
+          </Reveal>
+          <Reveal as="p" delay={0.16} className="text-muted max-w-3xl text-lg sm:text-xl">
+            {l(projet.resume)}
+          </Reveal>
+          <Reveal delay={0.24} className="space-y-4">
+            <div className="flex flex-wrap items-center gap-2">
               {projet.metiers.map((metier) => (
-                <li key={metier.slug}>
-                  <Badge tone="info">{l(metier.nom)}</Badge>
-                </li>
+                <span
+                  key={metier.slug}
+                  className={`${metierClass(colours.get(metier.slug))} rounded-full border border-[var(--m)] px-2.5 py-0.5 text-xs font-semibold text-[var(--m)]`}
+                >
+                  {l(metier.nom)}
+                </span>
               ))}
-            </ul>
-          )}
-          <ProjectBadges projet={projet} />
-          {mainDemo && (
-            <a className="btn btn-primary" href="#demo" onClick={() => selectDemo(mainDemo)}>
-              {t('project.openDemo', { demo: demoLabel(mainDemo) })}
-            </a>
-          )}
+              <ProjectBadges projet={projet} />
+            </div>
+            <InfoLine infos={contenu?.infos} />
+            {projet.technologies_detail.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-muted mr-1 text-sm">{t('project.technologies')}</span>
+                {projet.technologies_detail.map((technologie) => (
+                  <Link
+                    key={technologie.id}
+                    to={`/competences#competence-${technologie.id}`}
+                    className="bg-surface-2 hover:text-accent rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors"
+                  >
+                    {technologie.nom}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </Reveal>
+          <Reveal delay={0.32} className="flex flex-wrap gap-3 pt-2">
+            {mainDemo && (
+              <a className="btn btn-primary" href="#demo" onClick={() => selectDemo(mainDemo)}>
+                {t('project.openDemo', { demo: demoLabel(mainDemo) })}
+              </a>
+            )}
+            {contenu &&
+              links.map((key) => (
+                <a
+                  key={key}
+                  className="btn btn-secondary"
+                  href={contenu.liens[key]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t(`project.link.${key}`)}
+                </a>
+              ))}
+          </Reveal>
         </div>
       </header>
 
@@ -176,26 +268,6 @@ export function ProjectView({ projet, onDemoLaunch, lockedContent }: ProjectView
         </PageSection>
       )}
 
-      {projet.technologies_detail.length > 0 && (
-        <PageSection title={t('project.technologies')}>
-          <ul className="flex flex-wrap gap-3">
-            {projet.technologies_detail.map((technologie) => (
-              <li key={technologie.id}>
-                <Link
-                  to={`/competences#competence-${technologie.id}`}
-                  className="card hover:border-accent flex items-center gap-2 px-4 py-2 text-sm font-medium"
-                >
-                  {technologie.nom}
-                  <span className="text-muted font-normal">
-                    {t(`enums.niveau.${technologie.niveau}`)}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </PageSection>
-      )}
-
       {projet.galerie.length > 0 && (
         <PageSection title={t('project.gallery')} light>
           <Gallery medias={projet.galerie} />
@@ -218,25 +290,6 @@ export function ProjectView({ projet, onDemoLaunch, lockedContent }: ProjectView
               </div>
             )}
           </div>
-        </PageSection>
-      )}
-
-      {contenu && links.length > 0 && (
-        <PageSection title={t('project.links')} light>
-          <ul className="flex flex-wrap gap-3">
-            {links.map((key) => (
-              <li key={key}>
-                <a
-                  className="btn btn-secondary"
-                  href={contenu.liens[key]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {t(`project.link.${key}`)}
-                </a>
-              </li>
-            ))}
-          </ul>
         </PageSection>
       )}
     </article>

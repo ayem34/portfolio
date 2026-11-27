@@ -17,6 +17,7 @@ const ProjectEditor = lazy(() => import('./pages/ProjectEditor'));
 const ProjectPreview = lazy(() => import('./pages/ProjectPreview'));
 const TourEditor = lazy(() => import('./pages/TourEditor'));
 const SkillsAdmin = lazy(() => import('./pages/SkillsAdmin'));
+const MetiersAdmin = lazy(() => import('./pages/MetiersAdmin'));
 const TimelineAdmin = lazy(() => import('./pages/TimelineAdmin'));
 const ProfileAdmin = lazy(() => import('./pages/ProfileAdmin'));
 const MediaLibrary = lazy(() => import('./pages/MediaLibrary'));
@@ -27,6 +28,7 @@ const Publication = lazy(() => import('./pages/Publication'));
 const NAV_ITEMS = [
   { to: '/admin', key: 'dashboard', end: true },
   { to: '/admin/projets', key: 'projects' },
+  { to: '/admin/metiers', key: 'metiers' },
   { to: '/admin/competences', key: 'skills' },
   { to: '/admin/parcours', key: 'timeline' },
   { to: '/admin/profil', key: 'profile' },
@@ -63,7 +65,12 @@ function Layout({ session, children }: { session: AdminSession; children: ReactN
       </a>
       <aside className="border-border bg-surface border-b lg:min-h-screen lg:border-r lg:border-b-0">
         <div className="flex items-center justify-between gap-3 p-4">
-          <p className="font-display text-lg font-bold">{t('admin.title')}</p>
+          <p className="font-display flex items-center gap-2.5 text-lg font-bold">
+            <span className="monogram-ring size-7 rounded-full p-0.5" aria-hidden="true">
+              <span className="bg-surface block size-full rounded-full" />
+            </span>
+            {t('admin.title')}
+          </p>
           <button
             type="button"
             className="btn btn-secondary lg:hidden"
@@ -87,7 +94,7 @@ function Layout({ session, children }: { session: AdminSession; children: ReactN
                   end={'end' in item}
                   onClick={() => setMenuOpen(false)}
                   className={({ isActive }) =>
-                    `flex min-h-11 items-center justify-between rounded-lg px-3 text-sm font-medium ${isActive ? 'bg-accent text-on-accent' : 'text-fg hover:bg-surface-2'}`
+                    `flex min-h-11 items-center justify-between rounded-lg border-l-4 px-3 text-sm font-medium transition-colors ${isActive ? 'border-accent bg-surface-2 text-accent' : 'text-fg hover:bg-surface-2 border-transparent'}`
                   }
                 >
                   {t(`admin.nav.${item.key}`)}
@@ -126,7 +133,7 @@ function Layout({ session, children }: { session: AdminSession; children: ReactN
           </div>
         </nav>
       </aside>
-      <main id="admin-main" className="min-w-0 p-5 sm:p-8">
+      <main id="admin-main" className="dot-grid min-w-0 p-5 sm:p-8">
         <Suspense fallback={<p className="text-muted">{t('common.loading')}</p>}>
           {children}
         </Suspense>
@@ -157,6 +164,7 @@ export default function AdminApp() {
           <Route path="projets/:projetId" element={<ProjectEditor />} />
           <Route path="projets/:projetId/apercu" element={<ProjectPreview />} />
           <Route path="projets/:projetId/demos/:demoId/visite" element={<TourEditor />} />
+          <Route path="metiers" element={<MetiersAdmin />} />
           <Route path="competences" element={<SkillsAdmin />} />
           <Route path="parcours" element={<TimelineAdmin />} />
           <Route path="profil" element={<ProfileAdmin />} />

@@ -86,6 +86,24 @@
       "navigateur": "Navigateur",
       "telephone": "Téléphone",
       "aucun": "Aucun cadre"
+    },
+    "objet_message": {
+      "projet": "Un projet à réaliser",
+      "stage": "Proposition de stage",
+      "emploi": "Offre d'emploi",
+      "autre": "Autre"
+    },
+    "figure_metier": {
+      "graphique": "Graphique (barres et courbe)",
+      "pipeline": "Pipeline de données",
+      "application": "Fenêtre d'application"
+    },
+    "couleur_metier": {
+      "corail": "Corail",
+      "bleu": "Bleu",
+      "vert": "Vert",
+      "ambre": "Ambre",
+      "violet": "Violet"
     }
   },
   "errors": {
@@ -168,12 +186,26 @@
       "documentation": "Documentation",
       "rapport": "Rapport"
     },
-    "backToProjects": "← Tous les projets"
+    "backToProjects": "← Tous les projets",
+    "infos": {
+      "periode": "Période",
+      "role": "Rôle",
+      "equipe": "Équipe",
+      "cadre": "Cadre"
+    }
   },
   "timeline": {
     "ongoing": "aujourd'hui",
     "proof": "Justificatif",
-    "viewProof": "Voir le justificatif"
+    "viewProof": "Voir le justificatif",
+    "filterLabel": "Filtrer le parcours",
+    "groups": {
+      "all": "Tout",
+      "formation": "Formations",
+      "experience": "Expériences",
+      "challenges": "Challenges et hackathons",
+      "certification": "Certifications"
+    }
   },
   "admin": {
     "title": "Administration",
@@ -187,7 +219,8 @@
       "media": "Médias",
       "messages": "Messages",
       "accessRequests": "Demandes d'accès",
-      "publication": "Publication"
+      "publication": "Publication",
+      "metiers": "Métiers"
     },
     "lastLogin": "Dernière connexion : {{date}}",
     "viewSite": "Voir le site",
@@ -275,7 +308,15 @@
       "figuresHint": "Exemples : « 0,87 » + « Score F1 », « 2,4 M » + « lignes traitées ».",
       "figureValue": "Valeur",
       "figureLabel": "Libellé",
-      "addFigure": "Ajouter un chiffre"
+      "addFigure": "Ajouter un chiffre",
+      "keyInfos": "Infos clés",
+      "keyInfosHint": "Affichées en une ligne sous les badges, en haut de la fiche. Chaque champ vide est masqué.",
+      "infoExamples": {
+        "periode": "Ex. « oct. 2025 – janv. 2026 »",
+        "role": "Ex. « Conception et développement »",
+        "equipe": "Ex. « En équipe de 3 » ou « Seule »",
+        "cadre": "Ex. « Projet tutoré · cours de Python »"
+      }
     },
     "gallery": {
       "add": "Ajouter des images à la galerie",
@@ -364,7 +405,12 @@
       "newDomain": "Nouveau domaine (à saisir ci-dessous)",
       "domain": "Domaine",
       "level": "Niveau",
-      "usedIn": "utilisée dans {{count}} projet(s)"
+      "usedIn": "utilisée dans {{count}} projet(s)",
+      "learningTitle": "Si elle est encore en cours d'apprentissage",
+      "learningHint": "Tant qu'aucun projet publié n'utilise cette compétence, elle s'affiche dans « Ce que j'apprends en ce moment », avec ces deux informations.",
+      "source": "Où je l'apprends",
+      "progression": "Étape atteinte",
+      "learningShort": "en cours · {{step}}"
     },
     "timeline": {
       "description": "Formations, stage, certifications, hackathons et challenges : une seule frise sur la page À propos, triée par date.",
@@ -394,14 +440,21 @@
         "accroche": "Positionnement",
         "profil": "Profil",
         "orientation": "Orientation",
-        "methode": "Comment je travaille"
+        "methode": "Comment je travaille",
+        "slogan": "Grand titre de la page À propos",
+        "disponibilite": "Disponible à partir de",
+        "localisation": "Lieu"
       },
       "sectionHints": {
         "accroche": "Deux phrases, affichées sur l'accueil.",
         "profil": "Page À propos : du génie logiciel à la Data.",
         "orientation": "Page À propos : ce que vous recherchez.",
-        "methode": "Page À propos : votre façon de travailler."
-      }
+        "methode": "Page À propos : votre façon de travailler.",
+        "slogan": "Ex. « Du génie logiciel à la **Data Science.** » : les mots entre ** ** sont mis en valeur.",
+        "disponibilite": "Ex. « février 2027 ». Laisser vide pour masquer le badge « Disponible ».",
+        "localisation": "Ex. « Yamoussoukro · ouverte au télétravail »."
+      },
+      "availability": "Disponibilité et lieu"
     },
     "media": {
       "description": "Images, vidéos, PDF (CV, attestations), notebooks HTML et sous-titres. Les noms de fichiers sont régénérés à l'import.",
@@ -452,6 +505,19 @@
       "button": "Mettre le site à jour",
       "started": "Mise à jour du site lancée.",
       "done": "Mise à jour lancée. Dans une à deux minutes, vérifiez le résultat sur"
+    },
+    "metier": {
+      "description": "Les trois métiers visés. Leur texte, leur figure et leur couleur sont repris sur l'accueil, la page À propos, la page Compétences et les cartes de projets. Le nombre de projets et les compétences clés sont calculés automatiquement.",
+      "name": "Nom du métier",
+      "descriptionField": "Ce que je fais (vu par un recruteur)",
+      "descriptionHint": "Une phrase, affichée sur la carte du métier à l'accueil.",
+      "offerTitle": "Offre pour un client : titre",
+      "offerHint": "Affiché dans « Ce que je peux réaliser pour vous » (page À propos). Laisser vide pour ne pas afficher d'offre.",
+      "offerText": "Offre pour un client : texte",
+      "figure": "Figure animée",
+      "colour": "Couleur",
+      "preview": "Aperçu",
+      "computedHint": "Nombre de projets et compétences clés : calculés à partir des projets publiés."
     }
   },
   "site": {
@@ -471,7 +537,14 @@
   "home": {
     "cv": "CV",
     "featured": "Projets phares",
-    "allProjects": "Voir tous les projets"
+    "allProjects": "Voir les {{count}} projets",
+    "keySkills": "Compétences clés",
+    "seeMetierProjects": "Voir les projets {{metier}}",
+    "seeProjects": "Voir mes projets",
+    "whatIDoEyebrow": "Ce que je fais",
+    "whatIDo": "Trois métiers, un même fil : la donnée",
+    "featuredEyebrow": "Projets phares",
+    "fullTimeline": "Tout le parcours"
   },
   "projects": {
     "lead": "Chaque projet peut être vu, parcouru ou essayé : choisissez un métier pour mettre en tête les plus pertinents.",
@@ -486,21 +559,80 @@
       "demo": "Type de démo",
       "category": "Catégorie",
       "reset": "Effacer les filtres"
+    },
+    "sort": {
+      "label": "Trier par",
+      "ordre": "Recommandés",
+      "recent": "Plus récents"
     }
   },
   "about": {
     "profile": "Profil",
     "direction": "Orientation",
-    "timeline": "Parcours"
+    "timeline": "Parcours",
+    "timelineEyebrow": "Mon parcours",
+    "timelineTitle": "Chaque étape, avec son justificatif",
+    "offers": {
+      "eyebrow": "Pour vos projets",
+      "title": "Ce que je peux réaliser pour vous",
+      "lead": "Entreprise, association ou porteur de projet : je vous accompagne de l'idée jusqu'à la mise en ligne. Chaque réalisation est visible en démo dans mes projets.",
+      "seeWork": "Voir mes réalisations"
+    },
+    "method": {
+      "eyebrow": "Ma méthode",
+      "title": "Comment se passe un projet avec moi",
+      "youGet": "Vous recevez",
+      "steps": [
+        {
+          "title": "Comprendre",
+          "text": "Un échange pour cerner votre besoin, vos utilisateurs et vos règles métier.",
+          "deliverable": "Un résumé du besoin, validé ensemble"
+        },
+        {
+          "title": "Concevoir",
+          "text": "Maquettes et plan de l'application, validés avec vous avant d'écrire une ligne de code.",
+          "deliverable": "Les maquettes cliquables"
+        },
+        {
+          "title": "Construire",
+          "text": "Je livre par étapes : à chaque étape, une version que vous pouvez tester.",
+          "deliverable": "Une démo à chaque étape"
+        },
+        {
+          "title": "Livrer",
+          "text": "Mise en ligne, documentation et prise en main par votre équipe.",
+          "deliverable": "L'application en ligne et sa documentation"
+        }
+      ]
+    }
   },
   "skills": {
-    "lead": "Chaque compétence renvoie aux projets qui la prouvent.",
+    "lead": "Chaque forme montre ce que j'apporte pour un métier. Tout est calculé à partir de mes projets publiés : plus une compétence y est utilisée, plus la forme s'étend.",
     "usedIn_one": "Utilisée dans {{count}} projet :",
     "usedIn_other": "Utilisée dans {{count}} projets :",
-    "noProject": "Pas encore de projet publié avec cette compétence."
+    "noProject": "Pas encore de projet publié avec cette compétence.",
+    "title": "Ma carte de compétences",
+    "radarHint": "Choisissez un métier pour isoler sa forme.",
+    "radarCaption": "Nombre de projets par domaine de compétences et par métier",
+    "domain": "Domaine",
+    "domainFilter": "Filtrer par domaine",
+    "allDomains": "Tous les domaines",
+    "matrixCaption": "Compétences utilisées dans chaque projet",
+    "skill": "Compétence",
+    "projectCount": "Nb de projets",
+    "usedInProject": "utilisée",
+    "learning": "En cours",
+    "progressLabel": "Avancement",
+    "steps": ["Cours suivi", "Exercices", "Projet prévu"],
+    "matrixEyebrow": "Vue d'ensemble",
+    "matrixTitle": "Quelle compétence, dans quel projet",
+    "matrixHint": "Survolez une ligne ou une colonne pour suivre une compétence ou un projet. Cliquez sur un projet pour ouvrir sa fiche.",
+    "learningEyebrow": "En cours",
+    "learningTitle": "Ce que j'apprends en ce moment",
+    "learningHint": "Pas encore de projet publié : je l'indique honnêtement, avec la formation suivie."
   },
   "contact": {
-    "lead": "Une question, une offre de stage ou un premier emploi à proposer ? Écrivez-moi.",
+    "lead": "Vous recrutez ou vous avez un projet à réaliser ? Je vous réponds avec plaisir.",
     "details": "Coordonnées",
     "downloadCv": "Télécharger le CV (PDF)",
     "formTitle": "Envoyer un message",
@@ -513,7 +645,12 @@
     "send": "Envoyer",
     "sending": "Envoi…",
     "slowNotice": "Le serveur peut mettre jusqu'à une minute à se réveiller. Merci de patienter.",
-    "sent": "Message envoyé. Merci, je vous réponds rapidement."
+    "sent": "Message envoyé. Merci, je vous réponds rapidement.",
+    "title": "Écrivez-moi",
+    "subject": "Objet",
+    "company": "Entreprise",
+    "optional": "Facultatif",
+    "location": "Lieu"
   },
   "access": {
     "title": "Projet confidentiel",
@@ -555,5 +692,27 @@
       "title": "Page introuvable",
       "description": "Cette page n'existe pas."
     }
+  },
+  "figure": {
+    "sources": "Sources",
+    "transform": "Transformer",
+    "warehouse": "Entrepôt"
+  },
+  "footer": {
+    "title": "Un projet, une mission, un poste ?",
+    "lead": "Que vous recrutiez ou que vous ayez une idée à réaliser, écrivez-moi : je vous réponds rapidement.",
+    "project": "Parler de mon projet",
+    "job": "Proposer un poste"
+  },
+  "profile": {
+    "available": "Disponible"
+  },
+  "stats": {
+    "projects_one": "{{count}} projet",
+    "projects_other": "{{count}} projets",
+    "skills": "compétences prouvées",
+    "challenges": "challenges et hackathons",
+    "metiers": "métiers visés",
+    "publishedProjects": "projets publiés"
   }
 }

@@ -18,7 +18,14 @@ import {
 } from '../components/form';
 import { moveItem, useAdminMutation, useAdminQuery } from '../hooks';
 
-const EMPTY_SKILL: TechnologieInput = { nom: '', domaine: EMPTY_TEXT, niveau: 'notions' };
+const EMPTY_SKILL: TechnologieInput = {
+  nom: '',
+  domaine: EMPTY_TEXT,
+  niveau: 'notions',
+  source: EMPTY_TEXT,
+  progression: 1,
+};
+const PROGRESSIONS = [1, 2, 3] as const;
 
 interface SkillFormProps {
   skill: Technologie | null;
@@ -30,7 +37,13 @@ function SkillForm({ skill, domains, onDone }: SkillFormProps) {
   const { t } = useTranslation();
   const { register, handleSubmit, setValue, formState } = useForm<TechnologieInput>({
     defaultValues: skill
-      ? { nom: skill.nom, domaine: skill.domaine, niveau: skill.niveau }
+      ? {
+          nom: skill.nom,
+          domaine: skill.domaine,
+          niveau: skill.niveau,
+          source: skill.source,
+          progression: skill.progression,
+        }
       : EMPTY_SKILL,
   });
   const save = useAdminMutation(
@@ -73,6 +86,21 @@ function SkillForm({ skill, domains, onDone }: SkillFormProps) {
           </option>
         ))}
       </SelectField>
+      <fieldset className="border-border space-y-4 rounded-xl border p-4">
+        <legend className="px-1 text-sm font-semibold">{t('admin.skill.learningTitle')}</legend>
+        <p className="text-muted text-sm">{t('admin.skill.learningHint')}</p>
+        <BilingualField label={t('admin.skill.source')} name="source" register={register} />
+        <SelectField
+          label={t('admin.skill.progression')}
+          {...register('progression', { valueAsNumber: true })}
+        >
+          {PROGRESSIONS.map((step) => (
+            <option key={step} value={step}>
+              {t(`skills.steps.${step - 1}`)}
+            </option>
+          ))}
+        </SelectField>
+      </fieldset>
       <button type="submit" className="btn btn-primary" disabled={save.isPending}>
         {t('admin.save')}
       </button>
@@ -127,7 +155,12 @@ export default function SkillsAdmin() {
                 <div className="min-w-40 flex-1">
                   <p className="font-semibold">{skill.nom}</p>
                   <p className="text-muted text-sm">
-                    {l(skill.domaine)} · {t('admin.skill.usedIn', { count: skill.nb_projets })}
+                    {l(skill.domaine)} ·{' '}
+                    {skill.nb_projets > 0
+                      ? t('admin.skill.usedIn', { count: skill.nb_projets })
+                      : t('admin.skill.learningShort', {
+                          step: t(`skills.steps.${skill.progression - 1}`),
+                        })}
                   </p>
                 </div>
                 <Badge>{t(`enums.niveau.${skill.niveau}`)}</Badge>

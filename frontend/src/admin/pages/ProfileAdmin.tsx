@@ -2,11 +2,14 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { api } from '../../lib/api';
-import { PRESENTATION_KEYS, type Profil } from '../../lib/types';
+import { PRESENTATION_KEYS, type PresentationKey, type Profil } from '../../lib/types';
 import { ADMIN } from '../api';
 import { BilingualField, FormSection, PageHeader, QueryState, TextField } from '../components/form';
 import { MediaPicker } from '../components/MediaPicker';
 import { useAdminMutation, useAdminQuery } from '../hooks';
+
+/** Textes d'une ligne : un champ simple suffit. */
+const SHORT_KEYS: readonly PresentationKey[] = ['slogan', 'disponibilite', 'localisation'];
 
 function ProfileForm({ profil }: { profil: Profil }) {
   const { t } = useTranslation();
@@ -55,7 +58,7 @@ function ProfileForm({ profil }: { profil: Profil }) {
 
       <FormSection title={t('admin.profile.presentation')}>
         <p className="text-muted text-sm">{t('admin.markdownHint')}</p>
-        {PRESENTATION_KEYS.map((key) => (
+        {PRESENTATION_KEYS.filter((key) => !SHORT_KEYS.includes(key)).map((key) => (
           <BilingualField
             key={key}
             label={t(`admin.profile.sections.${key}`)}
@@ -64,6 +67,18 @@ function ProfileForm({ profil }: { profil: Profil }) {
             register={register}
             multiline
             rows={key === 'accroche' ? 3 : 6}
+          />
+        ))}
+      </FormSection>
+
+      <FormSection title={t('admin.profile.availability')}>
+        {SHORT_KEYS.map((key) => (
+          <BilingualField
+            key={key}
+            label={t(`admin.profile.sections.${key}`)}
+            hint={t(`admin.profile.sectionHints.${key}`)}
+            name={`presentation.${key}`}
+            register={register}
           />
         ))}
       </FormSection>

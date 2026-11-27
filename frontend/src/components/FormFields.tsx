@@ -3,6 +3,7 @@
 import {
   type InputHTMLAttributes,
   type ReactNode,
+  type SelectHTMLAttributes,
   type TextareaHTMLAttributes,
   useId,
 } from 'react';
@@ -46,6 +47,28 @@ export function Field({
   return (
     <FieldShell id={id} label={label} hint={hint} error={error}>
       <input id={id} className="field" aria-invalid={Boolean(error)} {...input} />
+    </FieldShell>
+  );
+}
+
+export function SelectField({
+  label,
+  hint,
+  error,
+  options,
+  ...select
+}: FieldShellProps &
+  SelectHTMLAttributes<HTMLSelectElement> & { options: { value: string; label: string }[] }) {
+  const id = useId();
+  return (
+    <FieldShell id={id} label={label} hint={hint} error={error}>
+      <select id={id} className="field" aria-invalid={Boolean(error)} {...select}>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
     </FieldShell>
   );
 }
